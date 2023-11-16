@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/injection.dart';
+
+import 'features/food/views/cubit/cubit/foods_cubit.dart';
+import 'features/food/views/pages/foods_page.dart';
 
 void main() {
+   configureDependencies("debug");
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -31,7 +38,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:   BlocProvider(
+        create: (context) => FoodsCubit()..onReqest(),
+        child: const FoodsPage(),
+      ) 
     );
   }
 }
