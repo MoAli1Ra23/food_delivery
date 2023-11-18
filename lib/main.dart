@@ -4,6 +4,7 @@ import 'package:food_delivery/injection.dart';
 
 import 'features/food/views/cubit/cubit/foods_cubit.dart';
 import 'features/food/views/pages/foods_page.dart';
+import 'features/user_managment/view/Pages/singn_up_page.dart';
 
 void main() {
    configureDependencies("debug");
@@ -38,10 +39,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:   BlocProvider(
-        create: (context) => FoodsCubit()..onReqest(),
-        child: const FoodsPage(),
-      ) 
+      // home:   BlocProvider(
+      //   create: (context) => FoodsCubit()..onReqest(),
+      //   child: const FoodsPage(),
+      // ) 
+      home: const SigenUpPage(),
     );
   }
 }
