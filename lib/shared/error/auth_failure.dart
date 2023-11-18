@@ -7,6 +7,9 @@ class AuthFailure extends Failure {
 class ServerError extends AuthFailure{
   ServerError(super.message);
 }
-class EmailIsAreadyinUse extends AuthFailure{
-  EmailIsAreadyinUse(super.message);
+class EmailAlreadyInUse extends AuthFailure{
+  EmailAlreadyInUse(super.message);
+}
+class InValideEmailPassWordCombnie extends AuthFailure{
+  InValideEmailPassWordCombnie(super.message);
 }
