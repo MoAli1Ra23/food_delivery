@@ -16,3 +16,11 @@ class  EmptyMail extends Failure{
 }class  EmptyPassWord extends Failure{
   EmptyPassWord(super.message);
 }
+class EmptyORShortName extends Failure{
+  EmptyORShortName(super.message);
+
+}
+class NullName extends Failure{
+  NullName(super.message);
+
+}
