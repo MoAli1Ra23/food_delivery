@@ -13,6 +13,18 @@ class EmailAddressChange extends SingUpEvent {
   const EmailAddressChange(this.value);
 }
 
+class FirstNameChange extends SingUpEvent {
+  final String value;
+
+  const FirstNameChange(this.value);
+}
+
+class LastNameChange extends SingUpEvent {
+  final String value;
+
+  const LastNameChange(this.value);
+}
+
 class PassWordChange extends SingUpEvent {
   final String value;
 
