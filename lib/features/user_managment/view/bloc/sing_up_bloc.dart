@@ -15,7 +15,7 @@ part 'sing_up_state.dart';
 class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
   SingUpBloc()
       : super(  SingUpInitial(
-            passWord: null, emailAddress: null, result: null, firstName: Name(""), lastName: Name(""))) {
+            passWord: PassWord(""), emailAddress: EmailAddress(""), result: null, firstName: Name(""), lastName: Name(""))) {
     on<SingUpEvent>((event, emit) {});
     on<EmailAddressChange>((event, emit) =>
         emit(state.copyWith(emailAddress: EmailAddress(event.value))));
