@@ -7,16 +7,14 @@ import 'package:icon_icons/icon_icons.dart';
 class SigenUpPage extends StatelessWidget {
   SigenUpPage({super.key});
   final fkey = GlobalKey<FormState>();
-  final firstKey= GlobalKey();
-  final lastkey= GlobalKey();
-  final mailKey= GlobalKey();
-  final passKey= GlobalKey();
-  final firstcon=TextEditingController();
-  final lastcon=TextEditingController();
-  final mailCont=TextEditingController();
-  final passCont=TextEditingController();
-
-
+  final firstKey = GlobalKey();
+  final lastkey = GlobalKey();
+  final mailKey = GlobalKey();
+  final passKey = GlobalKey();
+  final firstcon = TextEditingController();
+  final lastcon = TextEditingController();
+  final mailCont = TextEditingController();
+  final passCont = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,7 @@ class SigenUpPage extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       decoration: BoxDecoration(
                           color: Colors.white,
-    
+                          // 01110243904
                           // border: Border.all(),
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
@@ -66,9 +64,8 @@ class SigenUpPage extends StatelessWidget {
                           Flexible(
                               flex: 3,
                               child: TextFormField(
-                                key:
-                                firstKey,
-                                controller: firstcon,
+                                  key: firstKey,
+                                  controller: firstcon,
                                   onChanged: (value) =>
                                       BlocProvider.of<SingUpBloc>(context)
                                           .add(FirstNameChange(value)),
@@ -96,7 +93,7 @@ class SigenUpPage extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       decoration: BoxDecoration(
                           color: Colors.white,
-    
+
                           // border: Border.all(),
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
@@ -113,8 +110,8 @@ class SigenUpPage extends StatelessWidget {
                           Flexible(
                               flex: 3,
                               child: TextFormField(
-                                key: lastkey,
-                                controller: lastcon,
+                                  key: lastkey,
+                                  controller: lastcon,
                                   onChanged: (v) =>
                                       BlocProvider.of<SingUpBloc>(context)
                                           .add(LastNameChange(v)),
@@ -149,7 +146,7 @@ class SigenUpPage extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 decoration: BoxDecoration(
                     color: Colors.white,
-    
+
                     // border: Border.all(),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
@@ -166,8 +163,8 @@ class SigenUpPage extends StatelessWidget {
                     Flexible(
                         flex: 5,
                         child: TextFormField(
-                          key: mailKey,
-                          controller: mailCont,
+                            key: mailKey,
+                            controller: mailCont,
                             onChanged: (value) =>
                                 BlocProvider.of<SingUpBloc>(context)
                                     .add(EmailAddressChange(value)),
@@ -180,7 +177,7 @@ class SigenUpPage extends StatelessWidget {
                                   if (l is NotMailFailure) {
                                     return "not mail";
                                   }
-    
+
                                   return null;
                                 }, (r) => null),
                             decoration: const InputDecoration(
@@ -199,7 +196,7 @@ class SigenUpPage extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 decoration: BoxDecoration(
                     color: Colors.white,
-    
+
                     // border: Border.all(),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
@@ -227,8 +224,10 @@ class SigenUpPage extends StatelessWidget {
                                     .passWord!
                                     .value
                                     .fold((l) {
-                                  if (l is EmptyPassWord) {
+                                  if (l is ShortPassWord) {
                                     return "short password";
+                                  } else if (l is EmptyPassWord) {
+                                    return "Empty password";
                                   }
                                   return null;
                                 }, (r) => null),
@@ -268,7 +267,7 @@ class SigenUpPage extends StatelessWidget {
                   )),
                 ),
               ),
-    
+
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
                 child: Row(
@@ -280,8 +279,8 @@ class SigenUpPage extends StatelessWidget {
                       color: Colors.black,
                     )),
                     Text('OR',
-                        style:
-                            TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w600)),
                     Expanded(
                         child: Divider(
                       height: 2,
@@ -290,7 +289,7 @@ class SigenUpPage extends StatelessWidget {
                   ],
                 ),
               ),
-    
+
               const SizedBox(
                 height: 10,
               ),

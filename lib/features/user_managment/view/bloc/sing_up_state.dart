@@ -15,7 +15,7 @@ sealed class SingUpState extends Equatable {
   final Name lastName;
 
   @override
-  List<Object?> get props => [passWord, emailAddress];
+  List<Object?> get props => [firstName,lastName,result,passWord, emailAddress];
 
   SingUpState copyWith({
     PassWord? passWord,
