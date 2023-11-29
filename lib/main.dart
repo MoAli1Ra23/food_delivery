@@ -5,9 +5,10 @@ import 'package:food_delivery/injection.dart';
 import 'features/food/views/cubit/cubit/foods_cubit.dart';
 import 'features/food/views/pages/foods_page.dart';
 import 'features/user_managment/view/Pages/singn_up_page.dart';
+import 'features/user_managment/view/bloc/sing_up_bloc.dart';
 
 void main() {
-   configureDependencies("debug");
+  configureDependencies("debug");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
@@ -42,8 +43,12 @@ class MyApp extends StatelessWidget {
       // home:   BlocProvider(
       //   create: (context) => FoodsCubit()..onReqest(),
       //   child: const FoodsPage(),
-      // ) 
-      home: const SigenUpPage(),
+      // )
+      home: BlocProvider(
+        create: (context) => SingUpBloc(),
+        
+        child: SigenUpPage(),
+      ),
     );
   }
 }
