@@ -257,8 +257,12 @@ class SigenUpPage extends StatelessWidget {
                             offset: const Offset(0, 3))
                       ]),
                   alignment: Alignment.center,
-                  child: const InkWell(
-                      child: Text(
+                  child:   InkWell(
+                    onTap: () {
+                      BlocProvider.of<SingUpBloc>(context).add(SubmittSingup());
+                      
+                    },
+                                          child: const Text(
                     "Sign UP",
                     style: TextStyle(
                         fontSize: 20,
