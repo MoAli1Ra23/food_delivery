@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:food_delivery/injection.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../shared/error/auth_failure.dart';
@@ -10,9 +11,12 @@ import '../../domain/repository/i_auth_facad.dart';
 @prod
 @Singleton(as: IAuthFacade)
 class Auth extends IAuthFacade {
-  final FirebaseAuth auth;
+  late FirebaseAuth auth;
 
-  Auth(this.auth);
+  Auth(){
+
+auth= getIt.get<FirebaseAuth>();
+  }
 
   @override
   Future<Either<Failure, Unit>> signInWithEmailAndPassword(
