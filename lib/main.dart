@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/injection.dart';
@@ -6,10 +7,16 @@ import 'features/food/views/cubit/cubit/foods_cubit.dart';
 import 'features/food/views/pages/foods_page.dart';
 import 'features/user_managment/view/Pages/singn_up_page.dart';
 import 'features/user_managment/view/bloc/sing_up_bloc.dart';
+import 'firebase_options.dart';
 
-void main() {
-  configureDependencies("debug");
+Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+   options: DefaultFirebaseOptions.currentPlatform,
+);
+  configureDependencies("debug");
+
   runApp(const MyApp());
 }
 
