@@ -9,8 +9,8 @@ import '../../../../shared/error/failuer.dart';
 import '../../domain/repository/i_auth_facad.dart';
 
 @prod
-@Singleton(as: IAuthFacade)
-class Auth extends IAuthFacade {
+@Singleton(as: IAuthFacade, env: ['prod','debug'])
+ class Auth extends IAuthFacade {
   late FirebaseAuth auth;
 
   Auth(){

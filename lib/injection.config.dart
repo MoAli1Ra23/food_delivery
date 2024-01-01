@@ -47,7 +47,10 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.singleton<_i6.IAuthFacade>(
       _i7.Auth(),
-      registerFor: {_prod},
+      registerFor: {
+        _prod,
+        _debug,
+      },
     );
     gh.lazySingleton<_i8.RestrauntRepo>(
         () => _i9.RestrauntRepoFirebaseImplementation());
