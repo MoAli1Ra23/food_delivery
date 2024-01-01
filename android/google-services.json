@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "740520582813",
+    "project_id": "food-delivery-df362",
+    "storage_bucket": "food-delivery-df362.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740520582813:android:3705a9e530edc07b5ebe74",
+        "android_client_info": {
+          "package_name": "com.egsmartapp.food_delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzcH7ByvnQz9lgCGwiaBN4biJZxa_JO_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
