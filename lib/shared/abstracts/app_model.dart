@@ -6,4 +6,5 @@ abstract class AppModel{
   @injectable
 FirebaseAuth get auth => FirebaseAuth.instance;
 
+
 }
