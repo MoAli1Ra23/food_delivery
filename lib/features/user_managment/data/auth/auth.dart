@@ -19,12 +19,12 @@ auth= getIt.get<FirebaseAuth>();
   }
 
   @override
-  Future<Either<Failure, Unit>> signInWithEmailAndPassword(
+  Future<Either<Failure, UserCredential>> signInWithEmailAndPassword(
       {required String emailAddress, required String password}) async {
     try {
       return await auth
           .signInWithEmailAndPassword(email: emailAddress, password: password)
-          .then((value) => right(unit));
+          .then((value) => right(value));
     } on PlatformException catch (e) {
       if (e.code == 'ERROR_WRONG_PASSWORD' ||
           e.code == 'ERROR_USER_NOT_FOUND') {
@@ -47,13 +47,13 @@ auth= getIt.get<FirebaseAuth>();
   }
 
   @override
-  Future<Either<Failure, Unit>> registerWithEmailAndPassword(
+  Future<Either<Failure, UserCredential>> registerWithEmailAndPassword(
       {required String emailAddress, required String password}) async {
     try {
       return await auth
           .createUserWithEmailAndPassword(
               email: emailAddress, password: password)
-          .then((value) => right(unit));
+          .then((value) => right(value));
     } on PlatformException catch (e) {
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
         return left(EmailAlreadyInUse(" "));
