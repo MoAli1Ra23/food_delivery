@@ -2,6 +2,7 @@
 import 'package:equatable/equatable.dart';
 
  import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
  import 'package:food_delivery/features/user_managment/validation/value_objects/pass_word.dart';
 import 'package:food_delivery/shared/error/failuer.dart';
 
@@ -14,14 +15,14 @@ sealed class LogInState extends Equatable {
       required this.result});
   final PassWord? passWord;
   final EmailAddress? emailAddress;
-  final Either<Failure, Unit>? result;
+  final Either<Failure, UserCredential>? result;
   @override
   List<Object?> get props => [passWord, emailAddress, result];
 
   LogInState copyWith({
     PassWord? passWord,
     EmailAddress? emailAddress,
-    Either<Failure, Unit>? result,
+    Either<Failure, UserCredential>? result,
   }) ;
 }
 
@@ -32,7 +33,7 @@ sealed class LogInState extends Equatable {
       required super.result});
       
         @override
-        LogInState copyWith({PassWord? passWord, EmailAddress? emailAddress, Either<Failure, Unit>? result}) {
+        LogInState copyWith({PassWord? passWord, EmailAddress? emailAddress, Either<Failure, UserCredential>? result}) {
          
     return LogInInitial(
       passWord: passWord ?? this.passWord,

@@ -8,3 +8,13 @@ sealed class LogInEvent extends Equatable {
 }
 
 class LogInCommand extends LogInEvent {}
+class EmailChange extends LogInEvent{
+  final String value;
+
+  const EmailChange(this.value);
+}
+class PassWordChange extends LogInEvent{
+  final String value;
+
+  const PassWordChange(this.value);
+}
