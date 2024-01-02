@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -9,7 +10,7 @@ import 'package:food_delivery/features/user_managment/validation/value_objects/p
 import 'package:food_delivery/injection.dart';
 
 import '../../../../shared/error/failuer.dart';
-import '../../domain/entites/user.dart';
+import '../../domain/entites/user.dart' as Users;
 
 part 'sing_up_event.dart';
 part 'sing_up_state.dart';
@@ -32,7 +33,7 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
     on<LastNameChange>(
         (event, emit) => emit(state.copyWith(lastName: Name(event.value))));
     on<SubmittSingup>((event, emit) async {
-      Either<Failure, Unit>? r;
+      Either<Failure, UserCredential>? r;
       if (state.emailAddress!.isValid && state.passWord!.isValid) {
         await getIt
             .get<IAuthFacade>()
@@ -42,12 +43,15 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
             .then(
               (value) => r = value,
             );
+          String fbID=" ";
+             r!.fold((l) => null, (r) => fbID=r.user!.uid);
         emit(state.copyWith(result: r));
-        User u = User(
+      Users.  User u =Users. User(
           id: 0,
           name: state.firstName.right!,
           mail: state.emailAddress!.right!,
           passWord: state.passWord!.right!,
+          fbID: fbID
         );
          await getIt<IProfManagement>().addUser(u);
       }
