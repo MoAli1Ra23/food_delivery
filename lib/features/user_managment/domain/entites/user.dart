@@ -9,12 +9,14 @@ class User extends Equatable {
   final String mail;
   final String? image;
   final String  passWord;
+  final String? fbID;
   const User({
     required this.id,
     required this.name,
     required this.mail,
     this.image,
     required this.passWord,
+    this.fbID
   });
 
   @override
@@ -25,6 +27,7 @@ class User extends Equatable {
       mail,
       image,
       passWord,
+      fbID,
     ];
   }
 
@@ -34,6 +37,7 @@ class User extends Equatable {
     String? mail,
     String? image,
     String? passWord,
+    String? fbID,
   }) {
     return User(
       id: id ?? this.id,
@@ -41,6 +45,7 @@ class User extends Equatable {
       mail: mail ?? this.mail,
       image: image ?? this.image,
       passWord: passWord ?? this.passWord,
+      fbID: fbID ?? this.fbID,
     );
   }
 
