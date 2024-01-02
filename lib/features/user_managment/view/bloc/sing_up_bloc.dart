@@ -2,20 +2,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:food_delivery/features/user_managment/domain/repository/i_auth_facad.dart';
+import 'package:food_delivery/features/user_managment/domain/repository/i_prof_managemant.dart';
 import 'package:food_delivery/features/user_managment/validation/value_objects/email_address.dart';
 import 'package:food_delivery/features/user_managment/validation/value_objects/name.dart';
 import 'package:food_delivery/features/user_managment/validation/value_objects/pass_word.dart';
 import 'package:food_delivery/injection.dart';
 
 import '../../../../shared/error/failuer.dart';
+import '../../domain/entites/user.dart';
 
 part 'sing_up_event.dart';
 part 'sing_up_state.dart';
 
 class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
   SingUpBloc()
-      : super(  SingUpInitial(
-            passWord: PassWord(""), emailAddress: EmailAddress(""), result: null, firstName: Name(""), lastName: Name(""))) {
+      : super(SingUpInitial(
+            passWord: PassWord(""),
+            emailAddress: EmailAddress(""),
+            result: null,
+            firstName: Name(""),
+            lastName: Name(""))) {
     on<SingUpEvent>((event, emit) {});
     on<EmailAddressChange>((event, emit) =>
         emit(state.copyWith(emailAddress: EmailAddress(event.value))));
@@ -28,7 +34,7 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
     on<SubmittSingup>((event, emit) async {
       Either<Failure, Unit>? r;
       if (state.emailAddress!.isValid && state.passWord!.isValid) {
-     await   getIt
+        await getIt
             .get<IAuthFacade>()
             .registerWithEmailAndPassword(
                 emailAddress: state.emailAddress!.right!,
@@ -37,8 +43,14 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
               (value) => r = value,
             );
         emit(state.copyWith(result: r));
+        User u = User(
+          id: 0,
+          name: state.firstName.right!,
+          mail: state.emailAddress!.right!,
+          passWord: state.passWord!.right!,
+        );
+         await getIt<IProfManagement>().addUser(u);
       }
     });
-
   }
 }
