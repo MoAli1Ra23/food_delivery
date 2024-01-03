@@ -10,23 +10,24 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
 import 'package:firebase_auth/firebase_auth.dart' as _i3;
+import 'package:firebase_storage/firebase_storage.dart' as _i5;
 import 'package:food_delivery/features/food/data/repositories/food_repo_debug_impl.dart'
-    as _i6;
-import 'package:food_delivery/features/food/domain/repositories/food_repo.dart'
-    as _i5;
-import 'package:food_delivery/features/restraunt_management/data/repositories/restraunt_repo_firebae_implementation.dart'
-    as _i12;
-import 'package:food_delivery/features/restraunt_management/domain/repositoies/restraunt_repo.dart'
-    as _i11;
-import 'package:food_delivery/features/user_managment/data/auth/auth.dart'
-    as _i8;
-import 'package:food_delivery/features/user_managment/data/auth/profile_management.dart'
-    as _i10;
-import 'package:food_delivery/features/user_managment/domain/repository/i_auth_facad.dart'
     as _i7;
-import 'package:food_delivery/features/user_managment/domain/repository/i_prof_managemant.dart'
+import 'package:food_delivery/features/food/domain/repositories/food_repo.dart'
+    as _i6;
+import 'package:food_delivery/features/restraunt_management/data/repositories/restraunt_repo_firebae_implementation.dart'
+    as _i13;
+import 'package:food_delivery/features/restraunt_management/domain/repositoies/restraunt_repo.dart'
+    as _i12;
+import 'package:food_delivery/features/user_managment/data/auth/auth.dart'
     as _i9;
-import 'package:food_delivery/shared/abstracts/app_model.dart' as _i13;
+import 'package:food_delivery/features/user_managment/data/auth/profile_management.dart'
+    as _i11;
+import 'package:food_delivery/features/user_managment/domain/repository/i_auth_facad.dart'
+    as _i8;
+import 'package:food_delivery/features/user_managment/domain/repository/i_prof_managemant.dart'
+    as _i10;
+import 'package:food_delivery/shared/abstracts/app_model.dart' as _i14;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -46,6 +47,7 @@ extension GetItInjectableX on _i1.GetIt {
     );
     final appModel = _$AppModel();
     final man = _$Man();
+    final storage = _$Storage();
     gh.factory<_i3.FirebaseAuth>(
       () => appModel.auth,
       registerFor: {
@@ -60,30 +62,39 @@ extension GetItInjectableX on _i1.GetIt {
         _debug,
       },
     );
-    gh.factory<_i5.FoodRepo>(
-      () => _i6.FoodRepoDebugImpl(),
+    gh.factory<_i5.FirebaseStorage>(
+      () => storage.storage,
+      registerFor: {
+        _prod,
+        _debug,
+      },
+    );
+    gh.factory<_i6.FoodRepo>(
+      () => _i7.FoodRepoDebugImpl(),
       registerFor: {_debug},
     );
-    gh.singleton<_i7.IAuthFacade>(
-      _i8.Auth(),
+    gh.singleton<_i8.IAuthFacade>(
+      _i9.Auth(),
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.singleton<_i9.IProfManagement>(
-      _i10.ProfileManagement(),
+    gh.singleton<_i10.IProfManagement>(
+      _i11.ProfileManagement(),
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.lazySingleton<_i11.RestrauntRepo>(
-        () => _i12.RestrauntRepoFirebaseImplementation());
+    gh.lazySingleton<_i12.RestrauntRepo>(
+        () => _i13.RestrauntRepoFirebaseImplementation());
     return this;
   }
 }
 
-class _$AppModel extends _i13.AppModel {}
+class _$AppModel extends _i14.AppModel {}
 
-class _$Man extends _i13.Man {}
+class _$Man extends _i14.Man {}
+
+class _$Storage extends _i14.Storage {}

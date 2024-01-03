@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,4 +13,10 @@ abstract class AppModel {
 abstract class Man {
   @Injectable(env: ['prod', 'debug'])
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
+}
+
+@module
+abstract class Storage {
+  @Injectable(env: ['prod', 'debug'])
+  FirebaseStorage get storage => FirebaseStorage.instance;
 }
