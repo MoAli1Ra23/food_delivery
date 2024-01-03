@@ -4,28 +4,32 @@ import 'package:food_delivery/injection.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/repository/i_prof_managemant.dart';
-@Singleton(as: IProfManagement, env: ['prod','debug'])
+
+@Singleton(as: IProfManagement, env: ['prod', 'debug'])
 class ProfileManagement extends IProfManagement {
   @override
   Future<int> addUser(User user) async {
-    int r =0;
+    int r = 0;
+
     /// to be tested
     /// todo: edit
-    var x= getIt.get<FirebaseFirestore>();
-    CollectionReference users= x.collection('users');
+    var x = getIt.get<FirebaseFirestore>();
+    CollectionReference users = x.collection('users');
     await users.add(user.toMap()).then((value) {
-      r=1;
+      r = 1;
       print("qeee addd");
     });
     return r;
-    
-    
-   }
+  }
 
   @override
-  Future<User> getusrtbyfbId(String fpId) {
-    // TODO: implement getusrtbyfbId
-    throw UnimplementedError();
+  Future<User> getusrtbyfbId(String fpId) async {
+    // todo: optimze it 
+    var x = getIt.get<FirebaseFirestore>();
+    CollectionReference users = x.collection('users');
+    QuerySnapshot? m =
+        await users.where("fbID", isEqualTo: fpId).get().then((value) => value);
+    return User.fromMap(m!.docs.first.data() as Map<String, dynamic>);
   }
 
   @override
@@ -33,5 +37,4 @@ class ProfileManagement extends IProfManagement {
     // TODO: implement getusrtbyid
     throw UnimplementedError();
   }
-  
 }
