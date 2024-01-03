@@ -16,7 +16,7 @@ class User extends Equatable {
     required this.mail,
     this.image,
     required this.passWord,
-    this.fbID
+   required this.fbID
   });
 
   @override
@@ -56,6 +56,7 @@ class User extends Equatable {
       'mail': mail,
       'image': image,
       'passWord': passWord,
+      'fbID':fbID
     };
   }
 
@@ -66,6 +67,7 @@ class User extends Equatable {
       mail: map['mail'] as String,
       image: map['image'] != null ? map['image'] as String : null,
       passWord: map['passWord'] as String,
+      fbID:  map['fbID'] as String
     );
   }
 
