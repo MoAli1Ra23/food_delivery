@@ -33,7 +33,7 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
     on<LastNameChange>(
         (event, emit) => emit(state.copyWith(lastName: Name(event.value))));
     on<SubmittSingup>((event, emit) async {
-      Either<Failure, UserCredential>? r;
+      Either<Failure, UserCredential>? re;
       if (state.emailAddress!.isValid && state.passWord!.isValid) {
         await getIt
             .get<IAuthFacade>()
@@ -41,11 +41,11 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
                 emailAddress: state.emailAddress!.right!,
                 password: state.passWord!.right!)
             .then(
-              (value) => r = value,
+              (value) => re = value,
             );
           String fbID=" ";
-             r!.fold((l) => null, (r) => fbID=r.user!.uid);
-        emit(state.copyWith(result: r));
+             re!.fold((l) => null, (r) => fbID=r.user!.uid);
+        emit(state.copyWith(result: re));
       Users.  User u =Users. User(
           id: 0,
           name: state.firstName.right!,
