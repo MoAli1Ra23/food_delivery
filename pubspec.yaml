@@ -80,7 +80,8 @@ flutter:
     - assets/images/auth/login.webp
     - assets/images/auth/fa.jpg
     - assets/images/auth/tw.jpg
-    - assets/images/auth/go.png
+    - assets/images/auth/go.png 
+    - assets/images/auth/noimg.png 
     # - assets/images/popular_foods/pf1.jpeg
     # - assets/images/popular_foods/pf2.jpeg
     # - assets/images/popular_foods/pf3.jpeg
