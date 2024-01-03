@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/features/user_managment/view/bloc/log_in_bloc.dart';
 import 'package:food_delivery/injection.dart';
 
 import 'features/food/views/cubit/cubit/foods_cubit.dart';
 import 'features/food/views/pages/foods_page.dart';
+import 'features/user_managment/view/Pages/log_in_page.dart';
 import 'features/user_managment/view/Pages/singn_up_page.dart';
 import 'features/user_managment/view/bloc/sing_up_bloc.dart';
 import 'firebase_options.dart';
@@ -49,13 +51,22 @@ class MyApp extends StatelessWidget {
       ),
       // home:   BlocProvider(
       //   create: (context) => FoodsCubit()..onReqest(),
-      //   child: const FoodsPage(),
-      // )
-      home: BlocProvider(
-        create: (context) => SingUpBloc(),
+      //   child: const FoodsPage(),)
+      
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context)=>SingUpBloc()
+          )
+      
+      
+      ],child:  BlocProvider(
+        create: (context) => LogInBloc(),
         
-        child: SigenUpPage(),
-      ),
+        child: LogInPage(),
+      
+      ),)
+
+      // home:   LogInPage(),
     );
   }
 }
