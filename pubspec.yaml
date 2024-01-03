@@ -41,7 +41,7 @@ dependencies:
   freezed: ^2.4.5
   get_it: ^7.6.4
   icon_icons: ^1.0.4
-  image_picker: ^1.0.4
+  image_picker: ^1.0.5
   injectable: ^2.3.2
   sqflite: ^2.3.0
 
