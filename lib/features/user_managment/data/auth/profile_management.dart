@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:food_delivery/features/user_managment/domain/entites/user.dart';
 import 'package:food_delivery/injection.dart';
 import 'package:injectable/injectable.dart';
@@ -24,7 +27,7 @@ class ProfileManagement extends IProfManagement {
 
   @override
   Future<User> getusrtbyfbId(String fpId) async {
-    // todo: optimze it 
+    // todo: optimze it
     var x = getIt.get<FirebaseFirestore>();
     CollectionReference users = x.collection('users');
     QuerySnapshot? m =
@@ -36,5 +39,23 @@ class ProfileManagement extends IProfManagement {
   Future<User> getusrtbyid(int int) {
     // TODO: implement getusrtbyid
     throw UnimplementedError();
+  }
+
+  @override
+  Future<String?> getProfileImage(String path) {
+     throw UnimplementedError();
+  }
+
+  @override
+  Future<String?> setProfileImage(String fpId, File img) async {
+    FirebaseStorage storage = getIt.get<FirebaseStorage>();
+    Reference ref = storage.ref().child('images').child("$fpId/");
+    File f =File("${img.path}.jpg");
+    TaskSnapshot x = await ref
+        .putFile(
+          f,
+        )
+        .then((p0) => p0);
+    return x.ref.getDownloadURL();
   }
 }

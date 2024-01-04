@@ -12,3 +12,9 @@ class ProfileBlocRequsit extends ProfileBlocEvent
 
   const ProfileBlocRequsit(this.fbId);
 }
+class ProfileBlocUpdateImage extends ProfileBlocEvent
+{
+  final File path;
+
+  const ProfileBlocUpdateImage(this.path);
+}
