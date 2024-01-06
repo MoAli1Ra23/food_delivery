@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -22,7 +24,9 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
             emailAddress: EmailAddress(""),
             result: null,
             firstName: Name(""),
-            lastName: Name(""))) {
+            lastName: Name(""),
+            image: null,
+            uri: null)) {
     on<SingUpEvent>((event, emit) {});
     on<EmailAddressChange>((event, emit) =>
         emit(state.copyWith(emailAddress: EmailAddress(event.value))));
@@ -43,18 +47,29 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
             .then(
               (value) => re = value,
             );
-          String fbID=" ";
-             re!.fold((l) => null, (r) => fbID=r.user!.uid);
+        String fbID = " ";
+        re!.fold((l) => null, (r) => fbID = r.user!.uid);
         emit(state.copyWith(result: re));
-      Users.  User u =Users. User(
-          id: 0,
-          name: state.firstName.right!,
-          mail: state.emailAddress!.right!,
-          passWord: state.passWord!.right!,
-          fbID: fbID
-        );
-         await getIt<IProfManagement>().addUser(u);
+        Users.User u = Users.User(
+            id: 0,
+            name: state.firstName.right!,
+            mail: state.emailAddress!.right!,
+            passWord: state.passWord!.right!,
+            fbID: fbID,
+            image: state.uri);
+        await getIt<IProfManagement>().addUser(u);
       }
+    });
+    on<SubmittImage>((event, emit) async {
+      await getIt<IProfManagement>()
+          .setProfileImage(
+            "000",
+            event.file,
+          )
+          .then((value) {
+            print(value);
+            emit(state.copyWith(uri: value));
+          });
     });
   }
 }

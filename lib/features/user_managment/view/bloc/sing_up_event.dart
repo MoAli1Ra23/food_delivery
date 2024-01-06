@@ -32,3 +32,9 @@ class PassWordChange extends SingUpEvent {
 }
 
 class SubmittSingup extends SingUpEvent {}
+
+class SubmittImage extends SingUpEvent {
+  final File file;
+
+  const SubmittImage(this.file);
+}

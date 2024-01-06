@@ -7,23 +7,29 @@ sealed class SingUpState extends Equatable {
       required this.lastName,
       required this.result,
       required this.passWord,
-      required this.emailAddress});
+      required this.emailAddress,
+      required this.image,
+      this.uri});
   final PassWord? passWord;
   final EmailAddress? emailAddress;
   final Either<Failure, UserCredential>? result;
   final Name firstName;
   final Name lastName;
+  final File? image;
+  final String? uri;
 
   @override
-  List<Object?> get props => [firstName,lastName,result,passWord, emailAddress];
+  List<Object?> get props =>
+      [firstName, lastName, result, passWord, emailAddress, image, uri];
 
-  SingUpState copyWith({
-    PassWord? passWord,
-    EmailAddress? emailAddress,
-    Either<Failure, UserCredential>? result,
-    Name? firstName,
-    Name? lastName,
-  }) ;
+  SingUpState copyWith(
+      {PassWord? passWord,
+      EmailAddress? emailAddress,
+      Either<Failure, UserCredential>? result,
+      Name? firstName,
+      Name? lastName,
+      File? image,
+      String? uri});
 }
 
 final class SingUpInitial extends SingUpState {
@@ -32,20 +38,27 @@ final class SingUpInitial extends SingUpState {
       required super.passWord,
       required super.emailAddress,
       required super.firstName,
-      required super.lastName});
+      required super.lastName,
+      required super.image,
+      super.uri});
   @override
   SingUpState copyWith(
       {PassWord? passWord,
       EmailAddress? emailAddress,
       Either<Failure, UserCredential>? result,
       Name? firstName,
-      Name? lastName}) {
+      Name? lastName,
+      File? image,
+      String? uri}) {
     return SingUpInitial(
-        passWord: passWord ?? this.passWord,
-        emailAddress: emailAddress ?? this.emailAddress,
-        result: result ?? this.result,
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName);
+      passWord: passWord ?? this.passWord,
+      emailAddress: emailAddress ?? this.emailAddress,
+      result: result ?? this.result,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      image: image ?? this.image,
+      uri: uri ?? this.uri,
+    );
   }
 }
 
@@ -53,7 +66,11 @@ final class SignUpResult extends SingUpState {
   const SignUpResult(
       {required super.result,
       required super.passWord,
-      required super.emailAddress, required super.firstName, required super.lastName,});
+      required super.emailAddress,
+      required super.firstName,
+      required super.lastName,
+      required super.image,
+      super.uri});
 
   @override
   SingUpState copyWith(
@@ -61,12 +78,17 @@ final class SignUpResult extends SingUpState {
       EmailAddress? emailAddress,
       Either<Failure, UserCredential>? result,
       Name? firstName,
-      Name? lastName}) {
+      Name? lastName,
+      File? image,
+      String? uri}) {
     return SingUpInitial(
-        passWord: passWord ?? this.passWord,
-        emailAddress: emailAddress ?? this.emailAddress,
-        result: result ?? this.result,
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName);
+      passWord: passWord ?? this.passWord,
+      emailAddress: emailAddress ?? this.emailAddress,
+      result: result ?? this.result,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      image: image ?? this.image,
+      uri: uri ?? this.uri,
+    );
   }
 }
