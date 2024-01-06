@@ -48,16 +48,44 @@ class ProfileManagement extends IProfManagement {
 
   @override
   Future<String?> setProfileImage(String fpId, File img) async {
-    FirebaseStorage storage = getIt.get<FirebaseStorage>();
-    Reference ref = storage.ref().child('images').child("Users/");
+    try {
+      FirebaseStorage storage = getIt.get<FirebaseStorage>();
+      Reference ref = storage.ref().child('images/Users');
+      String ts = DateTime.now().millisecondsSinceEpoch.toString();
+      var downloadUR = await ref
+          .child("$ts.jpg")
+          .putFile(img)
+          .then((p0) async => await p0.ref.getDownloadURL());
 
-    return File("${img.path}.jpg").create().then((value) async {
-      await ref
-          .putFile(
-            value,
-          )
-          .then((p0) async => await p0.ref.getDownloadURL())
-          .onError((error, stackTrace) => error.toString());
-    });
+      // var downloadUR = await ref.getDownloadURL();
+      print("downloadUR:$downloadUR >>>>>>>>>>>>>>>");
+      return downloadUR;
+    } on FirebaseException catch (e) {
+      print(e);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  @override
+  Future<String?> updateImagPathInUserDocViafbid(
+      String fbID, String imgPath) async {
+    FirebaseFirestore store = getIt.get<FirebaseFirestore>();
+    CollectionReference users = store.collection("users");
+    QuerySnapshot querySnapshot =
+        await users.where(FieldPath.fromString("fbID"), isEqualTo: fbID).get();
+
+    // Map<String, dynamic> ud = {'image': imgPath};
+    try {
+      if (querySnapshot.docs.isNotEmpty) {
+        var dd = users.doc(querySnapshot.docs.first.id);
+ 
+        await users.doc(querySnapshot.docs.first.id).update({'image': imgPath});
+       }
+    } catch (e) {
+      print(e);
+    }
   }
 }

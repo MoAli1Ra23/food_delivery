@@ -8,5 +8,6 @@ abstract class IProfManagement{
   Future<User> getusrtbyfbId(String fpId);
   Future<User> getusrtbyid(int int);
   Future<String?> getProfileImage(String path);
-  Future<String?> setProfileImage(String fpId,File img);
+  Future<String?> setProfileImage(String fbID,File img);
+  Future<String?> updateImagPathInUserDocViafbid(String fbId,String imgPath);
  }
