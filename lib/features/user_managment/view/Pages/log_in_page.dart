@@ -42,7 +42,7 @@ class LogInPage extends StatelessWidget {
             body: Column(
               children: [
                 Container(
-                    height: 300,
+                    height: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -202,55 +202,58 @@ class LogInPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 90,
-                      width: 90,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 10,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 3))
-                          ]),
-                      child: const Image(
-                          image: AssetImage("assets/images/auth/fa.jpg")),
-                    ),
-                    Container(
-                      height: 90,
-                      width: 90,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 10,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 3))
-                          ]),
-                      child: const Image(
-                          image: AssetImage("assets/images/auth/go.png")),
-                    ),
-                    Container(
-                      height: 90,
-                      width: 90,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 10,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 3))
-                          ]),
-                      child: const Image(
-                          image: AssetImage("assets/images/auth/tw.jpg")),
-                    ),
-                  ],
+                SizedBox(
+                  height: 90,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        height: 90,
+                        width: 90,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  blurRadius: 10,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, 3))
+                            ]),
+                        child: const Image(
+                            image: AssetImage("assets/images/auth/fa.jpg")),
+                      ),
+                      Container(
+                        height: 90,
+                        width: 90,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  blurRadius: 10,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, 3))
+                            ]),
+                        child: const Image(
+                            image: AssetImage("assets/images/auth/go.png")),
+                      ),
+                      Container(
+                        height: 90,
+                        width: 90,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  blurRadius: 10,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, 3))
+                            ]),
+                        child: const Image(
+                            image: AssetImage("assets/images/auth/tw.jpg")),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ));
