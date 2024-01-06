@@ -45,304 +45,203 @@ class SigenUpPage extends StatelessWidget {
       builder: (context, state) {
         return BlocBuilder<SingUpBloc, SingUpState>(
           builder: (context, state) {
-            return Scaffold(
-                appBar: AppBar(
-                  leading: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(Icons.arrow_back_ios_new_rounded)),
-                  title: const Text("Sing Up"),
-                ),
-                body: Form(
-                  key: fkey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  child: ListView(
-                    children: [
-                      SizedBox(
-                        height: 180,
-                        child: ImagePerViewer(
-                          source: ImageSource.camera,
-                          onTab: (_) {},
-                          tempImage: const Image(
-                            image: AssetImage('assets/images/auth/noimg.png'),
+            return SafeArea(
+              child: Scaffold(
+                  appBar: AppBar(
+                    leading: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: const Icon(Icons.arrow_back_ios_new_rounded)),
+                    title: const Text("Sing Up"),
+                  ),
+                  body: Form(
+                    key: fkey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: ListView(
+                      children: [
+                        SizedBox(
+                          height: 180,
+                          child: ImagePerViewer(
+                            source: ImageSource.camera,
+                            onTab: (value) {
+                              if (value == null) {
+                                return;
+                              }
+                              BlocProvider.of<SingUpBloc>(context)
+                                  .add(SubmittImage(value));
+                            },
+                            tempImage: const Image(
+                              image: AssetImage('assets/images/auth/noimg.png'),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      InputTextFormField(
-                        tkey: firstKey,
-                        controller: firstcon,
-                        txthint: "frist name",
-                        icon: const Icon(Icons.person_rounded),
-                        onChanged: (value) =>
-                            BlocProvider.of<SingUpBloc>(context)
-                                .add(FirstNameChange(value)),
-                        validator: (_) => BlocProvider.of<SingUpBloc>(context)
-                            .state
-                            .firstName
-                            .value
-                            .fold((l) {
-                          if (l is NullName) {
-                            return "فاؤغ ";
-                          } else if (l is EmptyORShortName) {
-                            return "قصير جدا";
-                          } else {
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        InputTextFormField(
+                          tkey: firstKey,
+                          controller: firstcon,
+                          txthint: "frist name",
+                          icon: const Icon(Icons.person_rounded),
+                          onChanged: (value) =>
+                              BlocProvider.of<SingUpBloc>(context)
+                                  .add(FirstNameChange(value)),
+                          validator: (_) => BlocProvider.of<SingUpBloc>(context)
+                              .state
+                              .firstName
+                              .value
+                              .fold((l) {
+                            if (l is NullName) {
+                              return "فاؤغ ";
+                            } else if (l is EmptyORShortName) {
+                              return "قصير جدا";
+                            } else {
+                              return null;
+                            }
+                          }, (r) => null),
+                          maigrtion: const EdgeInsets.symmetric(horizontal: 15),
+                        ),
+
+                        //mail
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        // names
+                        InputTextFormField(
+                          tkey: lastkey,
+                          controller: lastcon,
+                          txthint: "last name",
+                          icon: const Icon(Icons.person_rounded),
+                          onChanged: (value) =>
+                              BlocProvider.of<SingUpBloc>(context)
+                                  .add(LastNameChange(value)),
+                          validator: (_) => BlocProvider.of<SingUpBloc>(context)
+                              .state
+                              .lastName
+                              .value
+                              .fold((l) {
+                            if (l is NullName) {
+                              return "فاؤغ ";
+                            } else if (l is EmptyORShortName) {
+                              return "قصير جدا";
+                            } else {
+                              return null;
+                            }
+                          }, (r) => null),
+                          maigrtion: const EdgeInsets.symmetric(horizontal: 15),
+                        ),
+
+                        //mail
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        InputTextFormField(
+                          tkey: mailKey,
+                          controller: mailCont,
+                          onChanged: (value) =>
+                              BlocProvider.of<SingUpBloc>(context)
+                                  .add(EmailAddressChange(value)),
+                          validator: (_) => context
+                              .watch<SingUpBloc>()
+                              .state
+                              .emailAddress!
+                              .value
+                              .fold((l) {
+                            if (l is NotMailFailure) {
+                              return "not mail";
+                            }
+
                             return null;
-                          }
-                        }, (r) => null),
-                        maigrtion: const EdgeInsets.symmetric(horizontal: 15),
-                      ),
+                          }, (r) => null),
+                          txthint: "Email Address",
+                          icon: const Icon(Icons.mail_rounded),
+                          maigrtion: const EdgeInsets.symmetric(horizontal: 15),
+                        ),
 
-                      //mail
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      // names
-                      InputTextFormField(
-                        tkey: lastkey,
-                        controller: lastcon,
-                        txthint: "last name",
-                        icon: const Icon(Icons.person_rounded),
-                        onChanged: (value) =>
-                            BlocProvider.of<SingUpBloc>(context)
-                                .add(LastNameChange(value)),
-                        validator: (_) => BlocProvider.of<SingUpBloc>(context)
-                            .state
-                            .lastName
-                            .value
-                            .fold((l) {
-                          if (l is NullName) {
-                            return "فاؤغ ";
-                          } else if (l is EmptyORShortName) {
-                            return "قصير جدا";
-                          } else {
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        InputTextFormField(
+                          tkey: passKey,
+                          controller: passCont,
+                          onChanged: (value) =>
+                              BlocProvider.of<SingUpBloc>(context)
+                                  .add(PassWordChange(value)),
+                          validator: (value) => context
+                              .watch<SingUpBloc>()
+                              .state
+                              .passWord!
+                              .value
+                              .fold((l) {
+                            if (l is ShortPassWord) {
+                              return "short password";
+                            } else if (l is EmptyPassWord) {
+                              return "Empty password";
+                            }
                             return null;
-                          }
-                        }, (r) => null),
-                        maigrtion: const EdgeInsets.symmetric(horizontal: 15),
-                      ),
-
-                      //mail
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      InputTextFormField(
-                        tkey: mailKey,
-                        controller: mailCont,
-                        onChanged: (value) =>
-                            BlocProvider.of<SingUpBloc>(context)
-                                .add(EmailAddressChange(value)),
-                        validator: (_) => context
-                            .watch<SingUpBloc>()
-                            .state
-                            .emailAddress!
-                            .value
-                            .fold((l) {
-                          if (l is NotMailFailure) {
-                            return "not mail";
-                          }
-
-                          return null;
-                        }, (r) => null),
-                        txthint: "Email Address",
-                        icon: const Icon(Icons.mail_rounded),
-                        maigrtion: const EdgeInsets.symmetric(horizontal: 15),
-                      ),
-
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      InputTextFormField(
-                        tkey: passKey,
-                        controller: passCont,
-                        onChanged: (value) =>
-                            BlocProvider.of<SingUpBloc>(context)
-                                .add(PassWordChange(value)),
-                        validator: (value) => context
-                            .watch<SingUpBloc>()
-                            .state
-                            .passWord!
-                            .value
-                            .fold((l) {
-                          if (l is ShortPassWord) {
-                            return "short password";
-                          } else if (l is EmptyPassWord) {
-                            return "Empty password";
-                          }
-                          return null;
-                        }, (r) => null),
-                        txthint: "password",
-                        icon: const Icon(Icons.password_rounded),
-                        maigrtion: const EdgeInsets.symmetric(horizontal: 15),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: Container(
-                          height: 60,
-                          width: 180,
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 209, 193, 193),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
-                                    offset: const Offset(0, 3))
-                              ]),
-                          alignment: Alignment.center,
-                          child: InkWell(
-                              onTap: () {
-                                BlocProvider.of<SingUpBloc>(context)
-                                    .add(SubmittSingup());
+                          }, (r) => null),
+                          txthint: "password",
+                          icon: const Icon(Icons.password_rounded),
+                          maigrtion: const EdgeInsets.symmetric(horizontal: 15),
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        // const Divider(color: Colors.black,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 160,
+                              decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 209, 193, 193),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        blurRadius: 10,
+                                        spreadRadius: 2,
+                                        offset: const Offset(0, 3))
+                                  ]),
+                              alignment: Alignment.center,
+                              child: InkWell(
+                                  onTap: () {
+                                    BlocProvider.of<SingUpBloc>(context)
+                                        .add(SubmittSingup());
+                                  },
+                                  child: const Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87),
+                                  )),
+                            ),
+                            // Divider(color: Colors.black),
+                            const Text(
+                              "Or",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w700),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
                               },
                               child: const Text(
-                                "Sign UP",
+                                "log in",
                                 style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
-                              )),
-                        ),
-                      ),
-
-                      const Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                                child: Divider(
-                              height: 2,
-                              color: Colors.black,
-                            )),
-                            Text('OR',
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600)),
-                            Expanded(
-                                child: Divider(
-                              height: 2,
-                              color: Colors.black,
-                            )),
+                                    fontWeight: FontWeight.w500, fontSize: 18),
+                              ),
+                            )
                           ],
                         ),
-                      ),
-
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-                      // Center(
-                      //   child: Container(
-                      //     margin: const EdgeInsets.symmetric(horizontal: 35),
-                      //     height: 60,
-                      //     decoration: BoxDecoration(
-                      //         color: const Color.fromARGB(255, 209, 193, 193),
-                      //         borderRadius: BorderRadius.circular(20),
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //               color: Colors.grey.withOpacity(0.5),
-                      //               blurRadius: 10,
-                      //               spreadRadius: 2,
-                      //               offset: const Offset(0, 3))
-                      //         ]),
-                      //     alignment: Alignment.center,
-                      //     child: const Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //       crossAxisAlignment: CrossAxisAlignment.center,
-                      //       children: [
-                      //         Icon(Icons.mail),
-                      //         InkWell(
-                      //             child: Text(
-                      //           "Sign In with Mail",
-                      //           style: TextStyle(
-                      //               fontSize: 20,
-                      //               fontWeight: FontWeight.bold,
-                      //               color: Colors.black87),
-                      //         )),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      // Center(
-                      //   child: Container(
-                      //     margin: const EdgeInsets.symmetric(horizontal: 35),
-                      //     height: 60,
-                      //     decoration: BoxDecoration(
-                      //         color: const Color.fromARGB(255, 209, 193, 193),
-                      //         borderRadius: BorderRadius.circular(20),
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //               color: Colors.grey.withOpacity(0.5),
-                      //               blurRadius: 10,
-                      //               spreadRadius: 2,
-                      //               offset: const Offset(0, 3))
-                      //         ]),
-                      //     alignment: Alignment.center,
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //       crossAxisAlignment: CrossAxisAlignment.center,
-                      //       children: [
-                      //         IconIcons.whatsapp(height: 40, width: 40),
-                      //         const InkWell(
-                      //             child: Text(
-                      //           "Sign In with Google",
-                      //           style: TextStyle(
-                      //               fontSize: 20,
-                      //               fontWeight: FontWeight.bold,
-                      //               color: Colors.black87),
-                      //         )),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 20,
-                      // ),
-                      // Center(
-                      //   child: Container(
-                      //     margin: const EdgeInsets.symmetric(horizontal: 35),
-                      //     height: 60,
-                      //     decoration: BoxDecoration(
-                      //         color: const Color.fromARGB(255, 209, 193, 193),
-                      //         borderRadius: BorderRadius.circular(20),
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //               color: Colors.grey.withOpacity(0.5),
-                      //               blurRadius: 10,
-                      //               spreadRadius: 2,
-                      //               offset: const Offset(0, 3))
-                      //         ]),
-                      //     alignment: Alignment.center,
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //       crossAxisAlignment: CrossAxisAlignment.center,
-                      //       children: [
-                      //         IconIcons.facebook(height: 40, width: 40),
-                      //         const InkWell(
-                      //             child: Text(
-                      //           "Sign In with FaceBook",
-                      //           style: TextStyle(
-                      //               fontSize: 20,
-                      //               fontWeight: FontWeight.bold,
-                      //               color: Colors.black87),
-                      //         )),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ));
+                      ],
+                    ),
+                  )),
+            );
           },
         );
       },
