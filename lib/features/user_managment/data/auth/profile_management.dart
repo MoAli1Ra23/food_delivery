@@ -43,19 +43,21 @@ class ProfileManagement extends IProfManagement {
 
   @override
   Future<String?> getProfileImage(String path) {
-     throw UnimplementedError();
+    throw UnimplementedError();
   }
 
   @override
   Future<String?> setProfileImage(String fpId, File img) async {
     FirebaseStorage storage = getIt.get<FirebaseStorage>();
-    Reference ref = storage.ref().child('images').child("$fpId/");
-    File f =File("${img.path}.jpg");
-    TaskSnapshot x = await ref
-        .putFile(
-          f,
-        )
-        .then((p0) => p0);
-    return x.ref.getDownloadURL();
+    Reference ref = storage.ref().child('images').child("Users/");
+
+    return File("${img.path}.jpg").create().then((value) async {
+      await ref
+          .putFile(
+            value,
+          )
+          .then((p0) async => await p0.ref.getDownloadURL())
+          .onError((error, stackTrace) => error.toString());
+    });
   }
 }
