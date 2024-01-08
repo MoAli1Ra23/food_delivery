@@ -7,27 +7,32 @@ class Restraunt extends Equatable {
   final int id;
   final String name;
   final int rate;
+  final String userID;
 
   const Restraunt({
    required this.id,
    required this.name,
    required this.rate,
+   required this.userID,
 });
 
   @override
-  List<Object> get props => [id, name, rate];
+  List<Object> get props => [id, name, rate,userID];
 
   
+
 
   Restraunt copyWith({
     int? id,
     String? name,
     int? rate,
+    String? userID,
   }) {
     return Restraunt(
       id: id ?? this.id,
       name: name ?? this.name,
       rate: rate ?? this.rate,
+      userID: userID ?? this.userID,
     );
   }
 
@@ -36,6 +41,7 @@ class Restraunt extends Equatable {
       'id': id,
       'name': name,
       'rate': rate,
+      'userID': userID,
     };
   }
 
@@ -44,10 +50,14 @@ class Restraunt extends Equatable {
       id: map['id'] as int,
       name: map['name'] as String,
       rate: map['rate'] as int,
+      userID: map['userID'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Restraunt.fromJson(String source) => Restraunt.fromMap(json.decode(source) as Map<String, dynamic>);
-}
+
+  @override
+  bool get stringify => true;
+  }
