@@ -4,8 +4,7 @@ import 'package:food_delivery/features/user_managment/validation/value_failure/v
 import 'package:food_delivery/features/user_managment/view/Pages/profile_page.dart';
 import 'package:food_delivery/features/user_managment/view/bloc/sing_up_bloc.dart';
 import 'package:food_delivery/shared/widgets/image_perviewer.dart';
-import 'package:icon_icons/icon_icons.dart';
-import 'package:image_picker/image_picker.dart';
+ import 'package:image_picker/image_picker.dart';
 
 import '../../../../shared/widgets/input_text_form_field.dart';
 import '../bloc/profile_bloc_bloc.dart';
@@ -24,8 +23,7 @@ class SigenUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final h = MediaQuery.of(context).size.height;
-    final w = MediaQuery.of(context).size.width;
+     
     return BlocConsumer<SingUpBloc, SingUpState>(
       listener: (context, state) {
         if (state.result != null) {
@@ -192,6 +190,7 @@ class SigenUpPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            
                             Container(
                               height: 60,
                               width: 160,
