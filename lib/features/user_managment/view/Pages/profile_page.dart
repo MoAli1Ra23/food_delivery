@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/user_managment/view/bloc/profile_bloc_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../restraunt_management/view/bloc/create_restrunt_bloc.dart';
+import '../../../restraunt_management/view/pages/create_resturnt_page.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -34,6 +37,19 @@ class ProfilePage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (state.fbID == null) return;
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (_) {
+                          return BlocProvider(
+                            create: (context) => CreateRestruntBloc()
+                              ..add(CreateRestruntUserIDChanaged(state.fbID!)),
+                            child: CreateRestrunPage(),
+                          );
+                        }));
+                      },
+                      child: const Text("add restrun"))
                 ],
               );
             } else {
