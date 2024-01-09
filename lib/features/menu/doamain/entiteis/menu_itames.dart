@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class MenuItem extends Equatable {
-  final String imgUrl;
+  final String? imgUrl;
   final String dissName;
   final String discraption;
   final double price;
   final double? rate;
-  MenuItem({
+  const MenuItem({
     required this.imgUrl,
     required this.dissName,
     required this.discraption,

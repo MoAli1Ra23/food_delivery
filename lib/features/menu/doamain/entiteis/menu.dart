@@ -7,7 +7,7 @@ import 'menu_itames.dart';
 
 class Menu extends Equatable {
   final int id;
-  final int restrauntId;
+  final String restrauntId;
   final DateTime dateTime;
   final List<MenuItem>? items;
 
@@ -20,7 +20,7 @@ class Menu extends Equatable {
 
   Menu copyWith({
     int? id,
-    int? restrauntId,
+    String? restrauntId,
     DateTime? dateTime,
     List<MenuItem>? items,
   }) {
@@ -47,7 +47,7 @@ class Menu extends Equatable {
   factory Menu.fromMap(Map<String, dynamic> map) {
     return Menu(
       id: map['id'] as int,
-      restrauntId: map['restrauntId'] as int,
+      restrauntId: map['restrauntId'] ,
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
       items: List<MenuItem>.from((map['items'] as List<int>).map<MenuItem>((x) => MenuItem.fromMap(x as Map<String,dynamic>),),),
     );
