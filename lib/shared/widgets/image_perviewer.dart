@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePerViewer extends StatefulWidget {
-  const ImagePerViewer({
+    const ImagePerViewer({
     Key? key,
     this.onTab,
     this.tempImage,
@@ -15,26 +15,25 @@ class ImagePerViewer extends StatefulWidget {
   final Image? tempImage;
   final File? file;
   final ImageSource source;
+ 
 
   @override
   State<ImagePerViewer> createState() =>
-      _ImagePerViewerState(onTab, tempImage, source);
+      _ImagePerViewerState( );
 }
 
 class _ImagePerViewerState extends State<ImagePerViewer> {
-  final Function(File)? onTab;
-  final Image? tempImage;
-    File? f;
-  late bool isCamOrGellartyOpend;
+   late    bool isCamOrGellartyOpend;
+ 
   @override
   void initState() {
     isCamOrGellartyOpend = false;
     super.initState();
   }
 
-  final ImageSource source;
+File? f;
   pick() async {
-    await ImagePicker().pickImage(source: source).then((value) {
+    await ImagePicker().pickImage(source:widget. source).then((value) {
       if (value == null) {
         return;
       }
@@ -42,17 +41,16 @@ class _ImagePerViewerState extends State<ImagePerViewer> {
       setState(() {
         print(value);
         f = File(value.path);
-        isCamOrGellartyOpend = false;
+         isCamOrGellartyOpend = false;
       });
 
-      return onTab!.call(File(value.path));
+      return widget. onTab!.call(File(value.path));
     });
   }
 
-  _ImagePerViewerState(this.onTab, this.tempImage, this.source);
-  Widget setImage() {
+   Widget setImage() {
     if (f == null) {
-      return tempImage!;
+      return widget.tempImage!;
     } else {
       return Image(image: FileImage(f!));
     }
@@ -67,9 +65,9 @@ class _ImagePerViewerState extends State<ImagePerViewer> {
           SizedBox(height: 120, child: setImage()),
           TextButton.icon(
               onPressed: () async {
-                if (isCamOrGellartyOpend == true) return;
+                if (  isCamOrGellartyOpend == true) return;
                 setState(() {
-                  isCamOrGellartyOpend = true;
+                   isCamOrGellartyOpend = true;
                 });
                 pick();
               },
