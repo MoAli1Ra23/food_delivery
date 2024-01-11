@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/features/menu/view/bloc/select_food_bloc.dart';
 import 'package:food_delivery/features/user_managment/view/bloc/log_in_bloc.dart';
 import 'package:food_delivery/injection.dart';
 
 import 'features/food/views/cubit/cubit/foods_cubit.dart';
 import 'features/food/views/pages/foods_page.dart';
+import 'features/menu/view/page/select_food_page.dart';
 import 'features/user_managment/view/Pages/log_in_page.dart';
 import 'features/user_managment/view/Pages/singn_up_page.dart';
 import 'features/user_managment/view/bloc/sing_up_bloc.dart';
@@ -53,20 +55,25 @@ class MyApp extends StatelessWidget {
       //   create: (context) => FoodsCubit()..onReqest(),
       //   child: const FoodsPage(),)
       
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context)=>SingUpBloc()
-          )
+      // home: MultiBlocProvider(
+      //   providers: [
+      //     BlocProvider(create: (context)=>SingUpBloc()
+      //     )
       
       
-      ],child:  BlocProvider(
-        create: (context) => LogInBloc(),
+      // ],child:  BlocProvider(
+      //   create: (context) => LogInBloc(),
         
-        child: LogInPage(),
+      //   child: LogInPage(),
       
-      ),)
+      // ),)
+
 
       // home:   LogInPage(),
+      home:   BlocProvider(
+        create: (context) => SelectFoodBloc()..add(LoadMenu()),
+        child: const SelectFoodPage(),
+      ),
     );
   }
 }
