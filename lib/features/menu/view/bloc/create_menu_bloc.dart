@@ -72,11 +72,14 @@ class CreateMenuBloc extends Bloc<CreateMenuEvent, CreateMenuState> {
         emit((state as CreateMenuInitial).copyWith(items: newl));
       }
     });
-    on<CreateMenuSave>((event, emit) {
+    on<CreateMenuSave>((event, emit) async {
       var s = (state as CreateMenuInitial);
 
-      if (s.items != null && s.items!.isNotEmpty && s.restruntId != null) {
-        Menu(id: 0, restrauntId: s.restruntId!, dateTime: DateTime.now());
+      if (s.items != null && s.items!.isNotEmpty ) {
+       // Menu(id: 0, restrauntId: ".", dateTime: DateTime.now());
+        var repo= getIt.get<MenuitemsRepo>();
+        var r= await repo.insertItems(s.items!);
+
         // TODO: add func to impl save menu to firebase
         // TODO: add Listof Menu items as as sub collection
       }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/menu/view/bloc/create_menu_bloc.dart';
 
+import '../../../../shared/widgets/custom_button.dart';
 import '../widgets/add_menu_item_from.dart';
 
 class CreateMenu extends StatelessWidget {
@@ -18,6 +19,11 @@ class CreateMenu extends StatelessWidget {
     final h = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: CustomButton(
+            text: "Save",
+            onTab: () {
+              BlocProvider.of<CreateMenuBloc>(context).add(CreateMenuSave());
+            }),
         appBar: AppBar(
           leading: IconButton.filled(
               onPressed: () {},
@@ -59,17 +65,19 @@ class CreateMenu extends StatelessWidget {
     */
 
     // list of menu items
-
   }
-  showBottomSheat(BuildContext context ){Scaffold.of(context).showBottomSheet((context) =>  CreateMenuitemWidget(
-                  discraptionKey: discraptionKey,
-                  nameKey: nameKey,
-                  pricKey: pricKey,
-                  discraptionCont: discraptionCont,
-                  nameCont: nameCont,
-                  priceCont: priceCont,
-                  fKey: fKey,
-                ));}
+
+  showBottomSheat(BuildContext context) {
+    Scaffold.of(context).showBottomSheet((context) => CreateMenuitemWidget(
+          discraptionKey: discraptionKey,
+          nameKey: nameKey,
+          pricKey: pricKey,
+          discraptionCont: discraptionCont,
+          nameCont: nameCont,
+          priceCont: priceCont,
+          fKey: fKey,
+        ));
+  }
 }
 
 class MenuItems extends StatelessWidget {
@@ -102,9 +110,9 @@ class MenuItems extends StatelessWidget {
                   return SizedBox(
                       height: 120,
                       // width: w-40,
-                       child: Card(
+                      child: Card(
                         shadowColor: Colors.grey,
-                         child: Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //TODO: chage it to more advanced
@@ -112,26 +120,27 @@ class MenuItems extends StatelessWidget {
                               width: 120,
                               height: 110,
                               child: Image(
-                                  image:
-                                      AssetImage("assets/images/bestfood/bf10.jpeg")),
+                                  image: AssetImage(
+                                      "assets/images/bestfood/bf10.jpeg")),
                             ),
                             SizedBox(
                               height: 120,
-                               child: Column(
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     state.items![index].dissName,
                                     style: const TextStyle(
-                                        fontSize: 22, fontWeight: FontWeight.bold),
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(
-                                    width:w-150 ,
-                                  
+                                    width: w - 150,
                                     child: Text(
                                       state.items![index].discraption,
                                       style: const TextStyle(
-                                          fontSize: 16, fontWeight: FontWeight.w500),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                   Text(
@@ -146,8 +155,8 @@ class MenuItems extends StatelessWidget {
                               ),
                             )
                           ],
-                                           ),
-                       ));
+                        ),
+                      ));
                 }),
           );
         } else {

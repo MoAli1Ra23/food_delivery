@@ -136,7 +136,7 @@ class CreateMenuitemWidget extends StatelessWidget {
               ),
               const SizedBox(height: 15),
 
-              CustomBoutton(
+              CustomButton(
                   text: "Add",
                   onTab: () {
                     BlocProvider.of<CreateMenuBloc>(context)
