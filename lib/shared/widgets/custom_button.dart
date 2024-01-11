@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class CustomBoutton extends StatelessWidget {
-  const CustomBoutton({
+class CustomButton extends StatelessWidget {
+  const CustomButton({
     Key? key,
     this.onTab,
       this.height,

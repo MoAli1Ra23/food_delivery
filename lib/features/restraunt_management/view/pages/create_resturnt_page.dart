@@ -61,7 +61,7 @@ class CreateRestrunPage extends StatelessWidget {
                           }
                         },
                       ),
-                      Center(child: CustomBoutton(text: 'حفظ', onTab: () {
+                      Center(child: CustomButton(text: 'حفظ', onTab: () {
                          
                         BlocProvider.of<CreateRestruntBloc>(context).add(CreateRestruntSave());
                       })),
