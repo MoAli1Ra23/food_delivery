@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/features/image_management/view/bloc/manage_image_bloc.dart';
+import 'package:food_delivery/features/image_management/view/widgets/manage_image_widget.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/user_managment/view/bloc/profile_bloc_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../../restraunt_management/view/bloc/create_restrunt_bloc.dart';
 import '../../../restraunt_management/view/pages/create_resturnt_page.dart';
@@ -22,7 +24,19 @@ class ProfilePage extends StatelessWidget {
             if (state is ProfileBlocLaoded) {
               return Column(
                 children: [
-                  image(state, context),
+                  BlocProvider(
+                    create: (context) => ManageImageBloc()
+                      ..add(ImageSettingEvent(
+                          collction: "",
+                          imageSorce: ImageSource.camera,
+                          tempImage: const Image(
+                              image: AssetImage(
+                                  'assets/images/bestfood/bf3.jpeg')),
+                          url: state.image)),
+                    child: const ManageImageWidget(),
+                  ),
+
+                  // image(state, context),
                   Text(
                     state.mail!,
                     style: const TextStyle(
