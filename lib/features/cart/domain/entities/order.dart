@@ -17,13 +17,13 @@ class Order extends Equatable {
   /// state to hold order state 
   /// [Ordering,confirm , inprograse , out to delavr,check, goback]
   /// as String in firt version
-  final String state;
+  final Ordring state;
   const Order({
     required this.userId,
     required this.carts,
     required this.dateTime,
     required this.totalprice,
-      this.state="ordring",
+      this.state=Ordring.ordring,
   });
 
   @override
@@ -42,7 +42,7 @@ class Order extends Equatable {
     List<CartItem>? carts,
     DateTime? dateTime,
     double? totalprice,
-    String? state,
+    Ordring? state,
   }) {
     return Order(
       userId: userId ?? this.userId,
@@ -59,7 +59,7 @@ class Order extends Equatable {
       'carts': carts.map((x) => x.toMap()).toList(),
       'dateTime': dateTime.millisecondsSinceEpoch,
       'totalprice': totalprice,
-      'state': state,
+      'state': state.toString(),
     };
   }
 
@@ -69,7 +69,7 @@ class Order extends Equatable {
       carts: List<CartItem>.from((map['carts'] as List<int>).map<CartItem>((x) => CartItem.fromMap(x as Map<String,dynamic>),),),
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
       totalprice: map['totalprice'] as double,
-      state: map['state'] as String,
+      state: map['state'] as Ordring,
     );
   }
 
@@ -79,4 +79,16 @@ class Order extends Equatable {
       Order.fromMap(json.decode(source) as Map<String, dynamic>);
 
   
+}
+  /// [Ordering,confirm , inprograse , out to delavr,check, goback]
+
+
+  enum Ordring{
+  ordring  ,
+  confirm,
+  inPrograse,
+  outToDelavr,
+  goback
+
+
 }
