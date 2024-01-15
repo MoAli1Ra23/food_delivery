@@ -9,8 +9,27 @@ Future<Either<Failure, String>> insertItemInACollectinio(
   try {
     var x = getIt.get<FirebaseFirestore>();
     CollectionReference collectionReference = x.collection(collection);
-     String? s = await collectionReference.add(map).then((value) {
+    String? s = await collectionReference.add(map).then((value) {
       return value.id;
+    });
+    if (s != null) {
+      return right(s);
+    } else {
+      return left(Failure(""));
+    }
+  } catch (e) {
+    return left(Failure(""));
+  }
+}
+
+Future<Either<Failure, String>> updateItemInACollection(
+    Map map, String collection, String docID) async {
+  try {
+    var x = getIt.get<FirebaseFirestore>();
+    CollectionReference collectionReference = x.collection(collection);
+    String? s =
+        await collectionReference.doc(docID).update(map.cast()).then((value) {
+      return "1";
     });
     if (s != null) {
       return right(s);
