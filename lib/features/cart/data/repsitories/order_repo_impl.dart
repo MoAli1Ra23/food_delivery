@@ -28,6 +28,6 @@ class OrderRepoImpl extends OrderRepo {
 
   @override
   Future<Either<Failure, String>> updateOrder(ordrt.Order order, String docID) {
-    return updateItemInACollectinio(order.toMap(), "ordrs", docID);
+    return updateItemInACollection(order.toMap(), "ordrs", docID);
   }
 }
