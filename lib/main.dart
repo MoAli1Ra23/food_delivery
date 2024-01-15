@@ -1,12 +1,19 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/menu/view/bloc/select_food_bloc.dart';
 import 'package:food_delivery/features/user_managment/view/bloc/log_in_bloc.dart';
 import 'package:food_delivery/injection.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
+
 
 import 'features/food/views/cubit/cubit/foods_cubit.dart';
 import 'features/food/views/pages/foods_page.dart';
+import 'features/image_management/domain/entities/image_cashed_data.dart';
+import 'features/image_management/view/page/test_page.dart';
 import 'features/menu/view/page/select_food_page.dart';
 import 'features/user_managment/view/Pages/log_in_page.dart';
 import 'features/user_managment/view/Pages/singn_up_page.dart';
@@ -19,6 +26,11 @@ Future<void> main() async {
   await Firebase.initializeApp(
    options: DefaultFirebaseOptions.currentPlatform,
 );
+Directory directory = await         pathProvider.getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+   Hive.registerAdapter(ImageCashedDataAdapter());
+   await Hive.openBox<ImageCashedData>('Imagedata');
+
   configureDependencies("debug");
 
   runApp(const MyApp());
@@ -31,6 +43,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -49,31 +62,33 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        
         useMaterial3: true,
       ),
       // home:   BlocProvider(
       //   create: (context) => FoodsCubit()..onReqest(),
       //   child: const FoodsPage(),)
       
-      // home: MultiBlocProvider(
-      //   providers: [
-      //     BlocProvider(create: (context)=>SingUpBloc()
-      //     )
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context)=>SingUpBloc()
+          )
       
       
-      // ],child:  BlocProvider(
-      //   create: (context) => LogInBloc(),
+      ],child:  BlocProvider(
+        create: (context) => LogInBloc(),
+
         
-      //   child: LogInPage(),
+        child: LogInPage(),
       
-      // ),)
+      ),)
 
 
-      // home:   LogInPage(),
-      home:   BlocProvider(
-        create: (context) => SelectFoodBloc()..add(LoadMenu()),
-        child: const SelectFoodPage(),
-      ),
+      // home:   PageforTest(),
+      // home:   BlocProvider(
+      //   create: (context) => SelectFoodBloc()..add(LoadMenu()),
+      //   child: const SelectFoodPage(),
+      // ),
     );
   }
 }
