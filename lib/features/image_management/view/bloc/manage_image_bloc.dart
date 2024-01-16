@@ -107,7 +107,6 @@ class ManageImageBloc extends Bloc<ManageImageEvent, ManageImageState> {
               .then((Either<Failure, String> value) async {
             String? path;
 
-
             value.fold((l) => f = l, (r) => path = r);
             print(path);
             print(" its down loaded");
@@ -115,10 +114,11 @@ class ManageImageBloc extends Bloc<ManageImageEvent, ManageImageState> {
               emit(UplodingImageSucces(path: path!));
               ImageCashedData imageCashedData =
                   ImageCashedData(url: event.url!, path: path!);
-             await cashrepo.cashImage(imageCashedData);
+              await cashrepo.cashImage(imageCashedData);
             }
-
-            emit(UplodingImageFailure(failure: f!));
+            if (f != null) {
+              emit(UplodingImageFailure(failure: f!));
+            }
           });
         }
       }
