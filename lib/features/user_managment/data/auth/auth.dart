@@ -37,8 +37,7 @@ auth= getIt.get<FirebaseAuth>();
 
   @override
   Future<Either<Failure, Unit>> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
+     throw UnimplementedError();
   }
 
   @override
@@ -62,4 +61,17 @@ auth= getIt.get<FirebaseAuth>();
       }
     }
   }
+  
+  @override
+  Future<Either<Failure, User?>> checkAuthState() async {
+    auth= getIt.get<FirebaseAuth>();
+    try {
+      User? s= auth.currentUser;
+      return right(s);
+
+    } catch (e) {
+      return left(Failure(" "));
+      
+    }
+   }
 }
