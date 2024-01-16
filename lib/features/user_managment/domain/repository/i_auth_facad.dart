@@ -14,7 +14,9 @@ abstract class IAuthFacade {
     required String password,
   });
    Future<Either<Failure, Unit>>  signInWithGoogle();
+   Future<Either<Failure, Unit>>  singOut();
   Future<Either<Failure, Unit>>  signInWithPhoneNumber(String phoneNumber);
 
    Future<Either<Failure, User?>> checkAuthState() ;
+  
 }

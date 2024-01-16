@@ -9,13 +9,12 @@ import '../../../../shared/error/failuer.dart';
 import '../../domain/repository/i_auth_facad.dart';
 
 @prod
-@Singleton(as: IAuthFacade, env: ['prod','debug'])
- class Auth extends IAuthFacade {
+@Singleton(as: IAuthFacade, env: ['prod', 'debug'])
+class Auth extends IAuthFacade {
   late FirebaseAuth auth;
 
-  Auth(){
-
-auth= getIt.get<FirebaseAuth>();
+  Auth() {
+    auth = getIt.get<FirebaseAuth>();
   }
 
   @override
@@ -37,7 +36,7 @@ auth= getIt.get<FirebaseAuth>();
 
   @override
   Future<Either<Failure, Unit>> signInWithGoogle() {
-     throw UnimplementedError();
+    throw UnimplementedError();
   }
 
   @override
@@ -61,17 +60,30 @@ auth= getIt.get<FirebaseAuth>();
       }
     }
   }
-  
+
   @override
   Future<Either<Failure, User?>> checkAuthState() async {
-    auth= getIt.get<FirebaseAuth>();
+    auth = getIt.get<FirebaseAuth>();
     try {
-      User? s= auth.currentUser;
-      return right(s);
-
+      User? s = auth.currentUser;
+      
+       return right(s);
     } catch (e) {
       return left(Failure(" "));
-      
     }
-   }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> singOut() async {
+    try {
+      await auth.signOut().then((value) {
+        return right(unit);
+      }).onError((error, stackTrace) {
+        return left(Failure(""));
+      });
+      return left(Failure(""));
+    } catch (e) {
+      return left(Failure(""));
+    }
+  }
 }
