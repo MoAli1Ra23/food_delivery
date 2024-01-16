@@ -25,11 +25,9 @@ class LogInPage extends StatelessWidget {
           state.result!.fold((l) => null, (r) => uid = r.user!.uid);
           if (uid != null) {
             Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-             return BlocProvider(
-                create: (context) =>
-                    ProfileBlocBloc()..add(ProfileBlocRequsit(uid!)),
-                child: const ProfilePage(),
-              );
+              BlocProvider.of<ProfileBlocBloc>(context).add(ProfileBlocRequsit(uid!));
+              return const ProfilePage();
+              
             }));
           }
         }
