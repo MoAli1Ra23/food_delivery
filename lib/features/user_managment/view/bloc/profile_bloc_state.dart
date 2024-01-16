@@ -59,4 +59,12 @@ final class ProfileBlocLaoded extends ProfileBlocState {
       fbID : fbID ?? this.fbID,
     );
   }}
+  class ProfileStateSingOut extends ProfileBlocState{
+  ProfileStateSingOut({required super.fbID, required super.name, required super.mail, required super.image});
+
+  @override
+  ProfileBlocState copyWith({String? name, String? mail, String? image, String? fbID}) {
+     throw UnimplementedError();
+  }
+  }
 

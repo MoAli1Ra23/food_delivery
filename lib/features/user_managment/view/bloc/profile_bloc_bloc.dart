@@ -34,5 +34,13 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
         await x.updateImagPathInUserDocViafbid(state.fbID!, url);
       }
     });
+    on<SingoutCommand>((event, emit) {
+      
+      emit(ProfileStateSingOut(fbID: "",image: "",mail: "" ,name: ""));
+
+    });
   }
+  
+
+
 }

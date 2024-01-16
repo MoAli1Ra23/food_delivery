@@ -18,3 +18,7 @@ class ProfileBlocUpdateImage extends ProfileBlocEvent
 
   const ProfileBlocUpdateImage(this.path);
 }
+final class SingoutCommand extends ProfileBlocEvent
+{
+  
+}
