@@ -48,9 +48,12 @@ Future<void> main() async {
               create: (context) => LogInBloc(),
               // child: LogInPage(),
             ),
+            //  BlocProvider(
+            //         create: (context) => SelectFoodBloc()..add(LoadMenu()),
+            //         child: const SelectFoodPage());
             BlocProvider(
               lazy: true,
-              create: (context) => ProfileBlocBloc(),
+              create: (context) => SelectFoodBloc(),
               // child: const ProfilePage(),
             ),
           ],
@@ -99,20 +102,11 @@ class AuthLister extends StatelessWidget {
           }));
         } else {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) {
-              BlocProvider.of<ProfileBlocBloc>(context)
-                .add(
-                    ProfileBlocRequsit((state as AuthMasterISAuth).user.fbID!));
-
-              return const ProfilePage();
-            }),
-            // MaterialPageRoute(
-            //   builder: (_) {
-            //     return BlocProvider(
-            //         create: (context) => SelectFoodBloc()..add(LoadMenu()),
-            //         child: const SelectFoodPage());
-            //   },
-          );
+            MaterialPageRoute(builder: (_) { 
+                  BlocProvider.of<SelectFoodBloc>(context).add(LoadMenu());
+                  return const SelectFoodPage();
+              },
+          ));
         }
       },
       child: Container(
