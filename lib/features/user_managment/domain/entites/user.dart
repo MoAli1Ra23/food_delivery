@@ -8,15 +8,17 @@ class User extends Equatable {
   final String name;
   final String mail;
   final String? image;
-  final String  passWord;
+  final String passWord;
   final String? fbID;
+  final UserType type;
   const User({
     required this.id,
     required this.name,
     required this.mail,
     this.image,
     required this.passWord,
-   required this.fbID
+    required this.fbID,
+    this.type = UserType.customer,
   });
 
   @override
@@ -28,6 +30,7 @@ class User extends Equatable {
       image,
       passWord,
       fbID,
+      type,
     ];
   }
 
@@ -38,6 +41,7 @@ class User extends Equatable {
     String? image,
     String? passWord,
     String? fbID,
+    UserType? type,
   }) {
     return User(
       id: id ?? this.id,
@@ -46,6 +50,7 @@ class User extends Equatable {
       image: image ?? this.image,
       passWord: passWord ?? this.passWord,
       fbID: fbID ?? this.fbID,
+      type: type ?? this.type,
     );
   }
 
@@ -56,7 +61,8 @@ class User extends Equatable {
       'mail': mail,
       'image': image,
       'passWord': passWord,
-      'fbID':fbID
+      'fbID': fbID,
+      'type': type.toString()
     };
   }
 
@@ -67,11 +73,29 @@ class User extends Equatable {
       mail: map['mail'] as String,
       image: map['image'] != null ? map['image'] as String : null,
       passWord: map['passWord'] as String,
-      fbID:  map['fbID'] as String
+      fbID: map['fbID'] != null ? map['fbID'] as String : null,
+      type: map['type'] !=null
+          ? UserType.values
+              .where(
+                ((element) => (map['type'] as String) == element.toString()),
+              )
+              .first
+          : UserType.customer,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory User.fromJson(String source) =>
+      User.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  bool get stringify => true;
+}
+
+enum UserType {
+  admain,
+  delivery,
+  manager,
+  customer,
 }
