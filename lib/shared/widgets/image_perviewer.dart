@@ -9,7 +9,7 @@ class ImagePerViewer extends StatefulWidget {
     this.onTab,
     this.tempImage,
     this.file,
-    required this.source,
+      this.source =ImageSource.gallery,
   }) : super(key: key);
   final Function(File)? onTab;
   final Image? tempImage;
