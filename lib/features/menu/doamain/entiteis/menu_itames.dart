@@ -46,7 +46,7 @@ class MenuItem extends Equatable {
 
   factory MenuItem.fromMap(Map<String, dynamic> map) {
     return MenuItem(
-      imgUrl: map['imgUrl'] as String,
+      imgUrl:  (map['imgUrl']!=null &&  map['imgUrl'].toString().isNotEmpty)?  map['imgUrl'] as String:null,
       dissName: map['dissName'] as String,
       discraption: map['discraption'] as String,
       price: map['price'] as double,
