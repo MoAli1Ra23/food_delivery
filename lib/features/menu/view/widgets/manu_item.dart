@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/shared/widgets/image_perviewer.dart';
 
+import '../../../image_management/view/bloc/manage_image_bloc.dart';
+import '../../../image_management/view/widgets/manage_image_widget.dart';
 import '../../doamain/entiteis/menu_itames.dart';
 
 class SelectableMenuItem extends StatelessWidget {
@@ -25,12 +29,22 @@ class SelectableMenuItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Flexible(
-              flex: 1,
-              child: Image(
-                image: AssetImage('assets/images/bestfood/bf1.jpeg'),
-                height: 245,
-              )),
+            Flexible(
+            flex: 1,
+            child: BlocProvider(
+                create: (context) => ManageImageBloc()
+                  ..add(ImageSettingEvent(
+                      collction: "",
+                       tempImage: const Image(
+                          image: AssetImage('assets/images/bestfood/bf3.jpeg')),
+                      url: item.imgUrl,  )),
+                child: const ManageImageWidget(),
+              ),
+            // child: Image(
+            //   image: AssetImage('assets/images/bestfood/bf1.jpeg'),
+            //   height: 245,
+            // ),
+          ),
           Flexible(
             flex: 1,
             child: Column(
