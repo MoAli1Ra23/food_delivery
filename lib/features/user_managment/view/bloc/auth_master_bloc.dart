@@ -40,11 +40,12 @@ class AuthMasterBloc extends Bloc<AuthMasterEvent, AuthMasterState> {
               emit(AuthMasterISAuth(value));
             }
             print("null");
-          }).onError((error, stackTrace) {
-            print("error");
+          }).onError((error, stackTrace) async {
+             print("error");
             emit(AuthMasterInitial(failure: Failure(" ")));
-          }).timeout(const Duration(seconds: 5), onTimeout: () {
+          }).timeout(const Duration(seconds: 5), onTimeout: ()async {
             print("time out");
+
             emit(const AuthMasterInitial());
           });
 
