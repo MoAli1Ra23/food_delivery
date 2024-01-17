@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,16 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDlDIYoSZBRVKLkgE_3jzBl4E0nL9LC7fo',
+    appId: '1:740520582813:web:06943a33528c5a485ebe74',
+    messagingSenderId: '740520582813',
+    projectId: 'food-delivery-df362',
+    authDomain: 'food-delivery-df362.firebaseapp.com',
+    storageBucket: 'food-delivery-df362.appspot.com',
+    measurementId: 'G-TZTQRGTVK2',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDzcH7ByvnQz9lgCGwiaBN4biJZxa_JO_U',
     appId: '1:740520582813:android:76fa0211d5f5ebc55ebe74',
@@ -64,5 +68,14 @@ class DefaultFirebaseOptions {
     projectId: 'food-delivery-df362',
     storageBucket: 'food-delivery-df362.appspot.com',
     iosBundleId: 'com.example.foodDelivery',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyB0iivs8KQySKwXwo0ncSPeD2ybWDuQKOA',
+    appId: '1:740520582813:ios:9412e793967ea9f75ebe74',
+    messagingSenderId: '740520582813',
+    projectId: 'food-delivery-df362',
+    storageBucket: 'food-delivery-df362.appspot.com',
+    iosBundleId: 'com.example.foodDelivery.RunnerTests',
   );
 }
