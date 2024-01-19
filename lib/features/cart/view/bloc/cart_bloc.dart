@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:food_delivery/features/menu/doamain/entiteis/menu_itames.dart';
 
-import '../../../domain/entities/cart_item.dart';
+import '../../domain/entities/cart_item.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
