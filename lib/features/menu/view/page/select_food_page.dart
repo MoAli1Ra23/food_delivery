@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/menu/view/bloc/create_menu_bloc.dart';
 import 'package:food_delivery/features/menu/view/bloc/select_food_bloc.dart';
 import 'package:food_delivery/features/menu/view/widgets/menu_grid.dart';
+import 'package:food_delivery/shared/responsive/widget/info_widget.dart';
 import 'package:food_delivery/shared/widgets/custom_button.dart';
 
 import '../../../../shared/widgets/custom_appbar_reusable.dart';
@@ -32,6 +33,7 @@ class SelectFoodPage extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(15),
           child: ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
             children: [
               SizedBox(
                 height: 60,
@@ -58,7 +60,9 @@ class SelectFoodPage extends StatelessWidget {
                     child: Text("خطاءءءءءءءءءءءءءءءءء"),
                   );
                 } else {
-                  return MenuGrid(items: (state as SelectFoodInitial).items);
+                  return InfoWidget(builder: (context, deviceInfo) {
+                    return MenuGrid(items: (state as SelectFoodInitial).items);
+                  });
                 }
               })
             ],
