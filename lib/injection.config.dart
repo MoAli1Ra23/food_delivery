@@ -8,38 +8,39 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
-import 'package:firebase_auth/firebase_auth.dart' as _i3;
-import 'package:firebase_storage/firebase_storage.dart' as _i5;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i5;
+import 'package:connectivity_plus/connectivity_plus.dart' as _i3;
+import 'package:firebase_auth/firebase_auth.dart' as _i4;
+import 'package:firebase_storage/firebase_storage.dart' as _i6;
 import 'package:food_delivery/features/food/data/repositories/food_repo_debug_impl.dart'
-    as _i7;
-import 'package:food_delivery/features/food/domain/repositories/food_repo.dart'
-    as _i6;
-import 'package:food_delivery/features/image_management/data/repositories/image_date_cash.dart'
-    as _i13;
-import 'package:food_delivery/features/image_management/data/repositories/image_repo_impl.dart'
-    as _i15;
-import 'package:food_delivery/features/image_management/domain/repositories/image_data_cashed_repo.dart'
-    as _i12;
-import 'package:food_delivery/features/image_management/domain/repositories/image_repo.dart'
-    as _i14;
-import 'package:food_delivery/features/menu/data/repositories/menu_item_repo_impl.dart'
-    as _i17;
-import 'package:food_delivery/features/menu/doamain/repositories/menu_items_repo.dart'
-    as _i16;
-import 'package:food_delivery/features/restraunt_management/data/repositories/restraunt_repo_firebae_implementation.dart'
-    as _i19;
-import 'package:food_delivery/features/restraunt_management/domain/repositoies/restraunt_repo.dart'
-    as _i18;
-import 'package:food_delivery/features/user_managment/data/auth/auth.dart'
-    as _i9;
-import 'package:food_delivery/features/user_managment/data/auth/profile_management.dart'
-    as _i11;
-import 'package:food_delivery/features/user_managment/domain/repository/i_auth_facad.dart'
     as _i8;
-import 'package:food_delivery/features/user_managment/domain/repository/i_prof_managemant.dart'
+import 'package:food_delivery/features/food/domain/repositories/food_repo.dart'
+    as _i7;
+import 'package:food_delivery/features/image_management/data/repositories/image_date_cash.dart'
+    as _i14;
+import 'package:food_delivery/features/image_management/data/repositories/image_repo_impl.dart'
+    as _i16;
+import 'package:food_delivery/features/image_management/domain/repositories/image_data_cashed_repo.dart'
+    as _i13;
+import 'package:food_delivery/features/image_management/domain/repositories/image_repo.dart'
+    as _i15;
+import 'package:food_delivery/features/menu/data/repositories/menu_item_repo_impl.dart'
+    as _i18;
+import 'package:food_delivery/features/menu/doamain/repositories/menu_items_repo.dart'
+    as _i17;
+import 'package:food_delivery/features/restraunt_management/data/repositories/restraunt_repo_firebae_implementation.dart'
+    as _i20;
+import 'package:food_delivery/features/restraunt_management/domain/repositoies/restraunt_repo.dart'
+    as _i19;
+import 'package:food_delivery/features/user_managment/data/auth/auth.dart'
     as _i10;
-import 'package:food_delivery/shared/abstracts/app_model.dart' as _i20;
+import 'package:food_delivery/features/user_managment/data/auth/profile_management.dart'
+    as _i12;
+import 'package:food_delivery/features/user_managment/domain/repository/i_auth_facad.dart'
+    as _i9;
+import 'package:food_delivery/features/user_managment/domain/repository/i_prof_managemant.dart'
+    as _i11;
+import 'package:food_delivery/shared/abstracts/app_model.dart' as _i21;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -57,71 +58,79 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
+    final connections = _$Connections();
     final appModel = _$AppModel();
     final man = _$Man();
     final storage = _$Storage();
-    gh.factory<_i3.FirebaseAuth>(
+    gh.factory<_i3.Connectivity>(
+      () => connections.connection,
+      registerFor: {
+        _prod,
+        _debug,
+      },
+    );
+    gh.factory<_i4.FirebaseAuth>(
       () => appModel.auth,
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.factory<_i4.FirebaseFirestore>(
+    gh.factory<_i5.FirebaseFirestore>(
       () => man.firestore,
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.factory<_i5.FirebaseStorage>(
+    gh.factory<_i6.FirebaseStorage>(
       () => storage.storage,
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.factory<_i6.FoodRepo>(
-      () => _i7.FoodRepoDebugImpl(),
+    gh.factory<_i7.FoodRepo>(
+      () => _i8.FoodRepoDebugImpl(),
       registerFor: {_debug},
     );
-    gh.singleton<_i8.IAuthFacade>(
-      _i9.Auth(),
+    gh.singleton<_i9.IAuthFacade>(
+      _i10.Auth(),
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.singleton<_i10.IProfManagement>(
-      _i11.ProfileManagement(),
+    gh.singleton<_i11.IProfManagement>(
+      _i12.ProfileManagement(),
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.lazySingleton<_i12.ImageDataCasheRepo>(
-      () => _i13.ImageDataCasheRepoImpl(),
+    gh.lazySingleton<_i13.ImageDataCasheRepo>(
+      () => _i14.ImageDataCasheRepoImpl(),
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.lazySingleton<_i14.ImageRepo>(
-      () => _i15.ImageRepoImpl(),
+    gh.lazySingleton<_i15.ImageRepo>(
+      () => _i16.ImageRepoImpl(),
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.lazySingleton<_i16.MenuitemsRepo>(
-      () => _i17.MenuItemRepoImpl(),
+    gh.lazySingleton<_i17.MenuitemsRepo>(
+      () => _i18.MenuItemRepoImpl(),
       registerFor: {
         _prod,
         _debug,
       },
     );
-    gh.lazySingleton<_i18.RestrauntRepo>(
-      () => _i19.RestrauntRepoFirebaseImplementation(),
+    gh.lazySingleton<_i19.RestrauntRepo>(
+      () => _i20.RestrauntRepoFirebaseImplementation(),
       registerFor: {
         _prod,
         _debug,
@@ -131,8 +140,10 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$AppModel extends _i20.AppModel {}
+class _$Connections extends _i21.Connections {}
 
-class _$Man extends _i20.Man {}
+class _$AppModel extends _i21.AppModel {}
 
-class _$Storage extends _i20.Storage {}
+class _$Man extends _i21.Man {}
+
+class _$Storage extends _i21.Storage {}
