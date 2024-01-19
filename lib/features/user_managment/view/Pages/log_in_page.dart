@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/user_managment/view/Pages/profile_page.dart';
 import 'package:food_delivery/features/user_managment/view/Pages/singn_up_page.dart';
 import 'package:food_delivery/features/user_managment/view/bloc/profile_bloc_bloc.dart';
+import 'package:food_delivery/shared/error/failuer.dart';
 
 import '../../validation/value_failure/value_failure.dart';
 import '../bloc/log_in_bloc.dart' as login;
 import '../bloc/log_in_state.dart';
 import '../bloc/sing_up_bloc.dart';
+import '../messegs/on_failure_msg.dart';
 
 class LogInPage extends StatelessWidget {
   LogInPage({super.key});
@@ -22,12 +24,16 @@ class LogInPage extends StatelessWidget {
       listener: (context, state) {
         if (state.result != null) {
           String? uid;
-          state.result!.fold((l) => null, (r) => uid = r.user!.uid);
+          Failure? f;
+          state.result!.fold((l) => f = l, (r) => uid = r.user!.uid);
+          if (f != null) {
+            showFailureMsg(f!, context);
+          }
           if (uid != null) {
             Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-              BlocProvider.of<ProfileBlocBloc>(context).add(ProfileBlocRequsit(uid!));
+              BlocProvider.of<ProfileBlocBloc>(context)
+                  .add(ProfileBlocRequsit(uid!));
               return const ProfilePage();
-              
             }));
           }
         }
