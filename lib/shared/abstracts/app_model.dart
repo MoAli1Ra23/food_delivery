@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -19,4 +20,9 @@ abstract class Man {
 abstract class Storage {
   @Injectable(env: ['prod', 'debug'])
   FirebaseStorage get storage => FirebaseStorage.instance;
+}
+@module
+abstract class Connections {
+  @Injectable(env: ['prod', 'debug'])
+  Connectivity get connection => Connectivity();
 }
