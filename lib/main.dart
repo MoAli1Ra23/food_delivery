@@ -71,6 +71,7 @@ class MyApp extends StatelessWidget {
       title: 'Food Delivery',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: "Cairo",
         useMaterial3: true,
       ),
       // home:   BlocProvider(
@@ -109,10 +110,17 @@ class AuthLister extends StatelessWidget {
           ));
         }
       },
-      child: Container(
-        color: Colors.blueAccent,
-        child: const Center(
-          child: RefreshProgressIndicator(color: Colors.amber),
+      child: Scaffold(
+        body: Container(
+          color: Colors.blueAccent,
+          child: const Center(
+            child: Column(
+              children: [
+                Text("Connecting..."),
+                RefreshProgressIndicator(color: Colors.amber),
+              ],
+            ),
+          ),
         ),
       ),
     );
