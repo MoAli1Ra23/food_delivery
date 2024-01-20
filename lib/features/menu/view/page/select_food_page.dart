@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/features/cart/view/page/cart_page.dart';
 import 'package:food_delivery/features/menu/view/bloc/create_menu_bloc.dart';
 import 'package:food_delivery/features/menu/view/bloc/select_food_bloc.dart';
 import 'package:food_delivery/features/menu/view/widgets/menu_grid.dart';
@@ -32,9 +33,8 @@ class SelectFoodPage extends StatelessWidget {
             }),
         body: Padding(
           padding: const EdgeInsets.all(15),
-          child: ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            children: [
+          child: Column(
+             children: [
               SizedBox(
                 height: 60,
                 child: CustomReusableAppBar(
@@ -45,7 +45,11 @@ class SelectFoodPage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic),
                   onLeftTab: () {},
-                  onRightTab: () {},
+                  onRightTab: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                      return const CartPage();
+                    }));
+                  },
                   righeIcon: const Icon(Icons.shopping_cart_checkout_rounded),
                 ),
               ),

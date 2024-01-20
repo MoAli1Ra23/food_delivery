@@ -1,9 +1,9 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/menu/view/widgets/manu_item.dart';
 
 import '../../../../shared/responsive/widget/info_widget.dart';
+import '../../../cart/view/bloc/cart_bloc.dart';
 import '../../doamain/entiteis/menu_itames.dart';
 
 class MenuGrid extends StatelessWidget {
@@ -25,19 +25,24 @@ class MenuGrid extends StatelessWidget {
 
     //   ],);
 
-    return InfoWidget(
-      builder: ( context,deviceInfo){
-
+    return InfoWidget(builder: (context, deviceInfo, {grdlanrgh= 125}) {
       return GridView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount: items.length,
-         itemBuilder: (context, index) => SelectableMenuItem(
+        itemBuilder: (context, index) => SelectableMenuItem(
           item: items[index],
-          onSelect: () {},
-        ), gridDelegate:   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: deviceInfo.crossAxisCount,mainAxisSpacing: 5,crossAxisSpacing: 5),
+          onSelect: () {
+            BlocProvider.of<CartBloc>(context)
+                .add(AddCartItemEvent(items[index]));
+          },
+        ),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: deviceInfo.crossAxisCount,
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 5),
       );
-  });
+    });
   }
 }
