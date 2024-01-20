@@ -15,9 +15,9 @@ class InfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (context, constraints,{ int grdlanrgh=250}) {
         var mediaQueryData = MediaQuery.of(context);
-       var  crossAxisCount=(MediaQuery.of(context).size.width ~/ 250).toInt();
+       var  crossAxisCount=(MediaQuery.of(context).size.width ~/ grdlanrgh).toInt();
 
         DeviceInfo di = DeviceInfo(
             orientation: mediaQueryData.orientation,
