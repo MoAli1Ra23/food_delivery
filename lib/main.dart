@@ -10,6 +10,8 @@ import 'package:food_delivery/injection.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
+import 'features/cart/view/bloc/cart_bloc.dart';
+import 'features/cart/view/page/cart_page.dart';
 import 'features/image_management/domain/entities/image_cashed_data.dart';
 import 'features/menu/view/bloc/select_food_bloc.dart';
 import 'features/menu/view/page/select_food_page.dart';
@@ -30,34 +32,39 @@ Future<void> main() async {
 
   configureDependencies("debug");
 
-  runApp( BlocProvider(
-        create: (context) => AuthMasterBloc()..add(AuthMasterCheckAuthState()),
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              lazy: true,
-              create: (context) => SingUpBloc(),
-            ),
-            BlocProvider(
-              lazy: true,
-              create: (context) => ProfileBlocBloc(),
-              // child: const ProfilePage(),
-            ),
-            BlocProvider(
-              lazy: true,
-              create: (context) => LogInBloc(),
-              // child: LogInPage(),
-            ),
-            //  BlocProvider(
-            //         create: (context) => SelectFoodBloc()..add(LoadMenu()),
-            //         child: const SelectFoodPage());
-            BlocProvider(
-              lazy: true,
-              create: (context) => SelectFoodBloc(),
-              // child: const ProfilePage(),
-            ),
-          ],
-           child: const MyApp(),),));
+  runApp(BlocProvider(
+    create: (context) => AuthMasterBloc()..add(AuthMasterCheckAuthState()),
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          lazy: true,
+          create: (context) => SingUpBloc(),
+        ),
+        BlocProvider(
+          lazy: true,
+          create: (context) => ProfileBlocBloc(),
+          // child: const ProfilePage(),
+        ),
+        BlocProvider(
+          lazy: true,
+          create: (context) => LogInBloc(),
+          // child: LogInPage(),
+        ),
+        BlocProvider(
+          lazy: true,
+
+          create: (context) => CartBloc(),
+          // child: const SelectFoodPage()
+        ),
+        BlocProvider(
+          lazy: true,
+          create: (context) => SelectFoodBloc(),
+          // child: const ProfilePage(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -78,9 +85,9 @@ class MyApp extends StatelessWidget {
       //   create: (context) => FoodsCubit()..onReqest(),
       //   child: const FoodsPage(),)
 
+      // home: const CartPage(),
       home: const AuthLister(),
-        
-      
+
       // home:   PageforTest(),
       // home:   BlocProvider(
       //   create: (context) => SelectFoodBloc()..add(LoadMenu()),
@@ -102,11 +109,13 @@ class AuthLister extends StatelessWidget {
             return LogInPage();
           }));
         } else {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) { 
-                  BlocProvider.of<SelectFoodBloc>(context).add(LoadMenu());
-                  return const SelectFoodPage();
-              },
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (_) {
+              BlocProvider.of<CartBloc>(context)
+                  .add(UserIDSelected((state as AuthMasterISAuth).user.fbID!));
+              BlocProvider.of<SelectFoodBloc>(context).add(LoadMenu());
+              return const SelectFoodPage();
+            },
           ));
         }
       },
@@ -115,6 +124,8 @@ class AuthLister extends StatelessWidget {
           color: Colors.blueAccent,
           child: const Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text("Connecting..."),
                 RefreshProgressIndicator(color: Colors.amber),
