@@ -13,9 +13,21 @@ class AddCartItemEvent extends CartEvent {
   const AddCartItemEvent(this.menuItem);
 }
 
-final class IncraesCountEvent extends CartEvent {}
+final class IncraesCountEvent extends CartEvent {
+  final CartItem item;
+  final int index;
 
-final class DecraesCountEvent extends CartEvent {}
+  const IncraesCountEvent(this.item, this.index);
+
+}
+
+final class DecraesCountEvent extends CartEvent {
+  final CartItem item;
+    final int index;
+
+
+  const DecraesCountEvent(this.item, this.index);
+}
 
 final class DeleteItemEvent extends CartEvent {
   final int index;
@@ -24,9 +36,9 @@ final class DeleteItemEvent extends CartEvent {
 }
 
 final class SubmmitOrderEvent extends CartEvent {}
+
 final class UserIDSelected extends CartEvent {
   final String userID;
 
   const UserIDSelected(this.userID);
 }
-

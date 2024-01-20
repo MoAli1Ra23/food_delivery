@@ -1,4 +1,3 @@
- 
 part of 'cart_bloc.dart';
 
 sealed class CartState extends Equatable {
@@ -23,6 +22,7 @@ class CartInitial extends CartState {
     List<CartItem>? cartitems,
     double? totalprice,
   }) {
+     
     return CartInitial(
       userID: userID ?? this.userID,
       cartitems: cartitems ?? this.cartitems,
