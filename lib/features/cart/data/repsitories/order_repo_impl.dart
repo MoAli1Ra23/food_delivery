@@ -6,8 +6,10 @@ import 'package:food_delivery/injection.dart';
 import 'package:food_delivery/shared/error/connection_failure.dart';
 import 'package:food_delivery/shared/error/failuer.dart';
 import 'package:food_delivery/shared/overapp/connection_cheacker.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../shared/overapp/fire_store.dart';
 import '../../domain/repositories/order_repo.dart';
+@LazySingleton(as: OrderRepo, env: ['prod', 'debug'])
 
 class OrderRepoImpl extends OrderRepo {
   @override
