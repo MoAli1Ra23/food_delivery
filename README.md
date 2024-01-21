@@ -1,16 +1,20 @@
 # food_delivery
+# features
+## multi type of users admin, restaurant manager, delivery man , and customers
+### for customers
+#### customer can choose Dishes and add to Cart and confirm order and track order state and confirm delivered
+### for restaurant manager 
+####  restaurant manager can add and edit the menu and  recive orders and   can change  order state
+### for delivery man  
+####    delivery man can receive orders to deliver it and can change its state
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ 
+## skills 
+ #####   firebase (auth, fireStor,Storage), hive 
+ #### resposive  desgin
+ 
+ 
