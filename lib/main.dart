@@ -11,7 +11,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'features/cart/view/bloc/cart_bloc.dart';
+import 'features/cart/view/bloc/order_mangement_bloc.dart';
+import 'features/cart/view/bloc/order_mangement_bloc.dart';
 import 'features/cart/view/page/cart_page.dart';
+import 'features/cart/view/page/orders_page.dart';
 import 'features/image_management/domain/entities/image_cashed_data.dart';
 import 'features/menu/view/bloc/select_food_bloc.dart';
 import 'features/menu/view/page/select_food_page.dart';
@@ -58,6 +61,11 @@ Future<void> main() async {
         ),
         BlocProvider(
           lazy: true,
+
+          create: (context) => OrderMangementBloc()..add(const RequistOrders(userID: "000")),
+         ),
+        BlocProvider(
+          lazy: true,
           create: (context) => SelectFoodBloc(),
           // child: const ProfilePage(),
         ),
@@ -85,7 +93,7 @@ class MyApp extends StatelessWidget {
       //   create: (context) => FoodsCubit()..onReqest(),
       //   child: const FoodsPage(),)
 
-      // home: const CartPage(),
+      // home: const OrderMangementPage(),
       home: const AuthLister(),
 
       // home:   PageforTest(),
@@ -112,7 +120,7 @@ class AuthLister extends StatelessWidget {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (_) {
               BlocProvider.of<CartBloc>(context)
-                  .add(UserIDSelected((state as AuthMasterISAuth).user.fbID!));
+                  .add(UserIDSelected((state as AuthMasterISAuth).user.uid!));
               BlocProvider.of<SelectFoodBloc>(context).add(LoadMenu());
               return const SelectFoodPage();
             },

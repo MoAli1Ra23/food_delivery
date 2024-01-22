@@ -32,21 +32,20 @@ class OrderMangementBloc
         } catch (e) {
           emit(OrdersLoadingFailure(Failure("")));
         }
-        if (event.state != null) {
-          try {
-            var x = await orderRepo
-                .fechOrdrrByUserID(event.userID!)
-                .then((value) => value);
+      } else if (event.userID != null) {
+        try {
+          var x = await orderRepo
+              .fechOrdrrByUserID(event.userID!)
+              .then((value) => value);
 
-            x.fold((l) => f = l, (r) => orders = r);
-            if (x.isRight()) {
-              emit(OrderMangementInitial(orders: orders!));
-            } else {
-              emit(OrdersLoadingFailure(f!));
-            }
-          } catch (e) {
-            emit(OrdersLoadingFailure(Failure("")));
+          x.fold((l) => f = l, (r) => orders = r);
+          if (x.isRight()) {
+            emit(OrderMangementInitial(orders: orders!));
+          } else {
+            emit(OrdersLoadingFailure(f!));
           }
+        } catch (e) {
+          emit(OrdersLoadingFailure(Failure("")));
         }
       }
     });
