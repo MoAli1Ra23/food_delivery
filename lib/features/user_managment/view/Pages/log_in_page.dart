@@ -25,7 +25,7 @@ class LogInPage extends StatelessWidget {
         if (state.result != null) {
           String? uid;
           Failure? f;
-          state.result!.fold((l) => f = l, (r) => uid = r.user!.uid);
+          state.result!.fold((l) => f = l, (r) => uid = r.uid);
           if (f != null) {
             showFailureMsg(f!, context);
           }

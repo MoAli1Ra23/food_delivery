@@ -12,7 +12,7 @@ sealed class SingUpState extends Equatable {
       this.uri});
   final PassWord? passWord;
   final EmailAddress? emailAddress;
-  final Either<Failure, UserCredential>? result;
+  final Either<Failure, User>? result;
   final Name firstName;
   final Name lastName;
   final File? image;
@@ -25,7 +25,7 @@ sealed class SingUpState extends Equatable {
   SingUpState copyWith(
       {PassWord? passWord,
       EmailAddress? emailAddress,
-      Either<Failure, UserCredential>? result,
+      Either<Failure, User>? result,
       Name? firstName,
       Name? lastName,
       File? image,
@@ -45,7 +45,7 @@ final class SingUpInitial extends SingUpState {
   SingUpState copyWith(
       {PassWord? passWord,
       EmailAddress? emailAddress,
-      Either<Failure, UserCredential>? result,
+      Either<Failure, User>? result,
       Name? firstName,
       Name? lastName,
       File? image,
@@ -76,7 +76,7 @@ final class SignUpResult extends SingUpState {
   SingUpState copyWith(
       {PassWord? passWord,
       EmailAddress? emailAddress,
-      Either<Failure, UserCredential>? result,
+      Either<Failure, User>? result,
       Name? firstName,
       Name? lastName,
       File? image,

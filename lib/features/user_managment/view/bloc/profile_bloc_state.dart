@@ -60,7 +60,7 @@ final class ProfileBlocLaoded extends ProfileBlocState {
     );
   }}
   class ProfileStateSingOut extends ProfileBlocState{
-  ProfileStateSingOut({required super.fbID, required super.name, required super.mail, required super.image});
+  const ProfileStateSingOut({required super.fbID, required super.name, required super.mail, required super.image});
 
   @override
   ProfileBlocState copyWith({String? name, String? mail, String? image, String? fbID}) {

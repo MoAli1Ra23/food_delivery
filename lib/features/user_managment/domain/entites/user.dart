@@ -4,84 +4,68 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  final int id;
-  final String name;
-  final String mail;
+  final String? name;
+  final String? mail;
+  final String? phoneNumber;
   final String? image;
-  final String passWord;
-  final String? fbID;
+  final String? uid;
   final UserType type;
   const User({
-    required this.id,
     required this.name,
     required this.mail,
+    this.phoneNumber,
     this.image,
-    required this.passWord,
-    required this.fbID,
+    required this.uid,
     this.type = UserType.customer,
   });
 
   @override
   List<Object?> get props {
     return [
-      id,
       name,
       mail,
       image,
-      passWord,
-      fbID,
+       uid,
       type,
     ];
   }
 
   User copyWith({
-    int? id,
     String? name,
     String? mail,
     String? image,
     String? passWord,
-    String? fbID,
+    String? uid,
     UserType? type,
   }) {
     return User(
-      id: id ?? this.id,
       name: name ?? this.name,
       mail: mail ?? this.mail,
       image: image ?? this.image,
-      passWord: passWord ?? this.passWord,
-      fbID: fbID ?? this.fbID,
+       uid: uid ?? this.uid,
       type: type ?? this.type,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'name': name,
       'mail': mail,
       'image': image,
-      'passWord': passWord,
-      'fbID': fbID,
-      'type': type.toString()
+      'fbID': uid,
+      'type':  type.name,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'] as int,
-      name: map['name'] as String,
-      mail: map['mail'] as String,
-      image: map['image'] != null ? map['image'] as String : null,
-      passWord: map['passWord'] as String,
-      fbID: map['fbID'] != null ? map['fbID'] as String : null,
-      type: map['type'] !=null
-          ? UserType.values
-              .where(
-                ((element) => (map['type'] as String) == element.toString()),
-              )
-              .first
-          : UserType.customer,
-    );
+        name: map['name'] as String,
+        mail: map['mail'] as String,
+        image: map['image'] != null ? map['image'] as String : null,
+         uid: map['fbID'] != null ? map['fbID'] as String : null,
+        type: map['type'] != null
+            ? toUserType(map['type'] as String)
+            : UserType.customer);
   }
 
   String toJson() => json.encode(toMap());
@@ -98,4 +82,18 @@ enum UserType {
   delivery,
   manager,
   customer,
+}
+
+String formUserType(UserType t){
+  return t.name;
+}
+UserType toUserType(String s){
+  for (var c in UserType.values) {
+    if(c.name==s){
+      return c;
+    }
+    
+  }
+  return UserType.customer;
+
 }

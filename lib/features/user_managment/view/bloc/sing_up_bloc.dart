@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -12,7 +11,7 @@ import 'package:food_delivery/features/user_managment/validation/value_objects/p
 import 'package:food_delivery/injection.dart';
 
 import '../../../../shared/error/failuer.dart';
-import '../../domain/entites/user.dart' as Users;
+import '../../domain/entites/user.dart';
 
 part 'sing_up_event.dart';
 part 'sing_up_state.dart';
@@ -37,7 +36,7 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
     on<LastNameChange>(
         (event, emit) => emit(state.copyWith(lastName: Name(event.value))));
     on<SubmittSingup>((event, emit) async {
-      Either<Failure, UserCredential>? re;
+      Either<Failure, User>? re;
       if (state.emailAddress!.isValid && state.passWord!.isValid) {
         await getIt
             .get<IAuthFacade>()
@@ -48,28 +47,28 @@ class SingUpBloc extends Bloc<SingUpEvent, SingUpState> {
               (value) => re = value,
             );
         String fbID = " ";
-        re!.fold((l) => null, (r) => fbID = r.user!.uid);
-        emit(state.copyWith(result: re));
-        Users.User u = Users.User(
-            id: 0,
+        re!.fold((l) => null, (r) => fbID = r.uid!);
+        User u = User(
             name: state.firstName.right!,
             mail: state.emailAddress!.right!,
-            passWord: state.passWord!.right!,
-            fbID: fbID,
+            uid: fbID,
             image: state.uri);
+
+        /// add  it to auth
+        await getIt<IAuthFacade>().updateUserProfile(u);
+        // add to User Data in FireStor;
         await getIt<IProfManagement>().addUser(u);
+        emit(state.copyWith(result: re));
       }
     });
     on<SubmittImage>((event, emit) async {
       await getIt<IProfManagement>()
           .setProfileImage(
-            "000",
-            event.file,
-          )
+        img: event.file,
+      )
           .then((value) {
-            print(value);
-            emit(state.copyWith(uri: value));
-          });
+        emit(state.copyWith(uri: value));
+      });
     });
   }
 }

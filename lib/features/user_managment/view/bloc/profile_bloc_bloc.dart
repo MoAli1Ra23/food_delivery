@@ -27,7 +27,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     on<ProfileBlocUpdateImage>((event, emit) async {
       emit(state.copyWith(image: event.path.path));
       var x = getIt.get<IProfManagement>();
-      var url = await x.setProfileImage(state.fbID!, event.path);
+      var url = await x.setProfileImage(fbID:  state.fbID!,img:  event.path);
 
       if (url != null) {
         emit(state.copyWith(image: url));
@@ -36,7 +36,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     });
     on<SingoutCommand>((event, emit) {
       
-      emit(ProfileStateSingOut(fbID: "",image: "",mail: "" ,name: ""));
+      emit(const ProfileStateSingOut(fbID: "",image: "",mail: "" ,name: ""));
 
     });
   }

@@ -1,7 +1,7 @@
 // ignore_for_file: dead_code
 
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fire;
 import 'package:flutter/services.dart';
 import 'package:food_delivery/injection.dart';
 import 'package:injectable/injectable.dart';
@@ -10,19 +10,21 @@ import '../../../../shared/error/auth_failure.dart';
 import '../../../../shared/error/connection_failure.dart';
 import '../../../../shared/error/failuer.dart';
 import '../../../../shared/overapp/connection_cheacker.dart';
+import '../../domain/entites/user.dart';
 import '../../domain/repository/i_auth_facad.dart';
+import '../mapper/user_mapper.dart';
 
 @prod
 @Singleton(as: IAuthFacade, env: ['prod', 'debug'])
 class Auth extends IAuthFacade {
-  late FirebaseAuth auth;
+  late fire.FirebaseAuth auth;
 
   Auth() {
-    auth = getIt.get<FirebaseAuth>();
+    auth = getIt.get<fire.FirebaseAuth>();
   }
 
   @override
-  Future<Either<Failure, UserCredential>> signInWithEmailAndPassword(
+  Future<Either<Failure, User>> signInWithEmailAndPassword(
       {required String emailAddress, required String password}) async {
     var con = await checkConnection();
     if (con.isLeft()) {
@@ -32,23 +34,18 @@ class Auth extends IAuthFacade {
     }
 
     try {
-      Failure? f;
-      UserCredential? u;
+      User? u;
       Either r = await auth
           .signInWithEmailAndPassword(email: emailAddress, password: password)
           .then((value) => right(value))
           .timeout(const Duration(seconds: 5));
-      r.fold((l) {
-        print("============");
-        print("lllllllllllllllllllllllllllllll");
-        print(l);
-      }, (r) => u);
+      r.fold((l) {}, (r) => u);
       if (r.isLeft()) {
         return left(AuthFailure(""));
       } else {
         return right(u!);
       }
-    } on FirebaseAuthException catch (e) {
+    } on fire.FirebaseAuthException catch (e) {
       return left(selectFailure(e.code));
     } on PlatformException catch (e) {
       return left(selectFailure(e.message!));
@@ -68,13 +65,14 @@ class Auth extends IAuthFacade {
   }
 
   @override
-  Future<Either<Failure, UserCredential>> registerWithEmailAndPassword(
+  Future<Either<Failure, User>> registerWithEmailAndPassword(
       {required String emailAddress, required String password}) async {
     try {
       return await auth
           .createUserWithEmailAndPassword(
               email: emailAddress, password: password)
-          .then((value) => right(value));
+          .then((value) =>
+              right(UserMapper.getUserFromFireBaseUserCredential(value)));
     } on PlatformException catch (e) {
       return left(selectFailure(e.code));
     }
@@ -88,9 +86,11 @@ class Auth extends IAuthFacade {
         return ConnectionsFailure("");
       }));
     }
-    auth = getIt.get<FirebaseAuth>();
+    auth = getIt.get<fire.FirebaseAuth>();
     try {
-      User? s = auth.currentUser;
+      User? s = auth.currentUser != null
+          ? UserMapper.getUserFromFireBaseUser(auth.currentUser!)
+          : null;
 
       return right(s);
     } on PlatformException catch (e) {
@@ -111,6 +111,17 @@ class Auth extends IAuthFacade {
       return left(selectFailure(e.code));
     } on Exception catch (e) {
       return left(selectFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Option<Failure>> updateUserProfile(User user) async {
+    try {
+      await auth.currentUser!.updatePhotoURL(user.image);
+      await auth.currentUser!.updateDisplayName(user.name);
+      return none();
+    } catch (e) {
+      return some(Failure(""));
     }
   }
 }

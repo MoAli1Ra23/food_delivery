@@ -23,16 +23,16 @@ class AuthMasterBloc extends Bloc<AuthMasterEvent, AuthMasterState> {
     });
     on<AuthMasterCheckAuthState>(
       (event, emit) async {
-        Either<Failure, auth.User?> x =
+        Either<Failure, User?> x =
             await getIt.get<IAuthFacade>().checkAuthState();
-        auth.User? u;
+        User? u;
         x.fold((l) => null, (r) => u = r);
         if (u == null) {
           emit(const AuthMasterInitial());
         } else {
           await getIt
               .get<IProfManagement>()
-              .getusrtbyfbId(u!.uid)
+              .getusrtbyfbId(u!.uid!)
               .then((value) {
             if (value != null) {
               print("is auth");

@@ -28,7 +28,7 @@ class SigenUpPage extends StatelessWidget {
       listener: (context, state) {
         if (state.result != null) {
           String? uid;
-          state.result!.fold((l) => null, (r) => uid = r.user!.uid);
+          state.result!.fold((l) => null, (r) => uid = r.uid);
           if (uid != null) {
             Navigator.of(context).push(MaterialPageRoute(builder: (_) {
               return BlocProvider(
