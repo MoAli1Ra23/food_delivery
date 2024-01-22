@@ -5,7 +5,7 @@ import '../entities/cart_item.dart';
 
 abstract class CartItemRepo{
   
-  Future<Either<Failure, String>>addCartItem(CartItem cartItem );
+  Future<Either<Failure, String>>addCartItem(CartItem cartItem,String ordrid );
   Future<Either<Failure, String>>updateCartItem(CartItem cartItem, String ordrid);
   /// delete cart  in path collection(order).doc(ordrid).collction(items).wehre(CartItem.id==cartitem.id)
   /// 

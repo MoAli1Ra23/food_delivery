@@ -9,8 +9,8 @@ import 'package:food_delivery/shared/overapp/connection_cheacker.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../shared/overapp/fire_store.dart';
 import '../../domain/repositories/order_repo.dart';
-@LazySingleton(as: OrderRepo, env: ['prod', 'debug'])
 
+@LazySingleton(as: OrderRepo, env: ['prod', 'debug'])
 class OrderRepoImpl extends OrderRepo {
   @override
   Future<Either<Failure, List<ordrt.Order>>> fechOrdrrByState(
@@ -21,7 +21,13 @@ class OrderRepoImpl extends OrderRepo {
   @override
   Future<Either<Failure, List<ordrt.Order>>> fechOrdrrByUserID(
       String id) async {
-    return await _fechOrdrrByField("userId", id).then((value) => value);
+         if (id !=null) {
+      return right(fake);
+    }
+    else{
+          return await _fechOrdrrByField("userId", id).then((value) => value);
+
+      }
   }
 
   @override
@@ -34,9 +40,15 @@ class OrderRepoImpl extends OrderRepo {
     return updateItemInACollection(order.toMap(), "ordrs", docID);
   }
 
-/// privte method to dont  rewrite qurey
+  /// privte method to dont  rewrite qurey
   Future<Either<Failure, List<ordrt.Order>>> _fechOrdrrByField(
+      
       String field, String comparingValue) async {
+        if(true)
+        {
+          return right(fake);
+        }
+
     var co = await checkConnection();
     if (co.isLeft()) {
       return Left(co.fold((l) => l, (r) => ConnectionsFailure(" ")));
@@ -58,4 +70,37 @@ class OrderRepoImpl extends OrderRepo {
       return left(Failure(""));
     }
   }
+
+  List<ordrt.Order> fake = [
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+    ordrt.Order(
+        userId: "", carts: const [], dateTime: DateTime.now(), totalprice: 1500),
+  ];
 }
